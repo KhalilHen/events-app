@@ -28,20 +28,21 @@ class AuthGate extends StatelessWidget {
             ),
           );
         }
-
-        if (snapshot.data == null) {
-          return const Scaffold(
-            body: Center(
-              child: Text('Not authenticated'),
-            ),
-          );
-        }
-
-        if (snapshot.data!.session != null) {
-          return const Homepage();
+        final session = snapshot.data?.session;
+        if (session != null) {
+          Future.microtask(() {
+            Navigator.pushReplacementNamed(context, '/home');
+          });
         } else {
-          return const Login();
+          Future.microtask(() {
+            Navigator.pushReplacementNamed(context, '/login');
+          });
         }
+        return const Scaffold(
+          body: Center(
+            child: CircularProgressIndicator(),
+          ),
+        );
       },
     );
   }

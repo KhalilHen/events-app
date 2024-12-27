@@ -3,17 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:pt_events_app/auth/aut_gate.dart';
 import 'package:pt_events_app/auth/auth_service.dart';
 import 'package:pt_events_app/pages/homepage.dart';
-import 'package:pt_events_app/pages/sign_up.dart';
-import 'routes/routes.dart  ';
 
-class Login extends StatefulWidget {
-  const Login({super.key});
+class SignUp extends StatefulWidget {
+  const SignUp({super.key});
 
   @override
-  State<Login> createState() => _LoginState();
+  State<SignUp> createState() => _SignUpState();
 }
 
-class _LoginState extends State<Login> {
+class _SignUpState extends State<SignUp> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
@@ -52,7 +50,7 @@ class _LoginState extends State<Login> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Login',
+          'Sign Up',
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
@@ -66,8 +64,8 @@ class _LoginState extends State<Login> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  'Welcome Back!',
+               const  Text(
+                  'Sign  up!',
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
