@@ -15,7 +15,9 @@ class _SignUpState extends State<SignUp> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
-
+  final confirmPasswordController = TextEditingController();
+  final authService = AuthService();
+  bool passwordVisible = false;
   @override
   void dispose() {
     emailController.dispose();
@@ -64,7 +66,7 @@ class _SignUpState extends State<SignUp> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-               const  Text(
+                const Text(
                   'Sign  up!',
                   style: TextStyle(
                     fontSize: 24,
@@ -78,11 +80,15 @@ class _SignUpState extends State<SignUp> {
                     labelText: 'Email',
                     hintText: 'Enter your email',
                     border: OutlineInputBorder(),
+                    prefixIcon: Icon(Icons.email),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your email';
+                    } else if (value != null && !value.contains('@')) {
+                      return 'Please enter a valid email';
                     }
+
                     return null;
                   },
                 ),
@@ -93,11 +99,31 @@ class _SignUpState extends State<SignUp> {
                     labelText: 'Password',
                     hintText: 'Enter your password',
                     border: OutlineInputBorder(),
+                    suffixIcon: IconButton(onPressed: () => setState(() => passwordVisible = !passwordVisible), icon: Icon(passwordVisible ? Icons.visibility : Icons.visibility_off)),
                   ),
-                  obscureText: true,
+                  obscureText: !passwordVisible,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your password';
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(height: 20),
+                TextFormField(
+                  controller: confirmPasswordController,
+                  decoration: InputDecoration(
+                    labelText: 'Confirm Password ',
+                    hintText: 'Enter your password',
+                    suffixIcon: IconButton(onPressed: () => setState(() => passwordVisible = !passwordVisible), icon: Icon(passwordVisible ? Icons.visibility : Icons.visibility_off)),
+                    border: OutlineInputBorder(),
+                  ),
+                  obscureText: !passwordVisible,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your password';
+                    } else if (value != passwordController.text) {
+                      return 'Passwords do not match';
                     }
                     return null;
                   },
@@ -124,7 +150,24 @@ class _SignUpState extends State<SignUp> {
                 ElevatedButton(
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
-                      checkUser(context, emailController.text, passwordController.text, formKey);
+                      // checkUser(context, emailController.text, passwordController.text, formKey);
+
+                      try {
+                        authService.signUpWithEmaiPassword(
+                          emailController.text,
+                          passwordController.text,
+                        );
+                      } catch (e) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Invalid email or password: ' + e.toString()),
+                          ),
+                        );
+                        print(e);
+                      }
+
+                      // print('Email: ${emailController.text}');
+                      // print('Password: ${passwordController.text}');
                     }
                   },
                   child: Text('Login'),
