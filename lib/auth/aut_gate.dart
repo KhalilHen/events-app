@@ -31,7 +31,7 @@ class AuthGate extends StatelessWidget {
         final session = snapshot.data?.session;
         if (session != null) {
           Future.microtask(() {
-            Navigator.pushReplacementNamed(context, '/home');
+            Navigator.pushReplacementNamed(context, '/homepage');
           });
         } else {
           Future.microtask(() {

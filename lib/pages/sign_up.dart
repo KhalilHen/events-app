@@ -157,6 +157,8 @@ class _SignUpState extends State<SignUp> {
                           emailController.text,
                           passwordController.text,
                         );
+
+                        Navigator.pushReplacementNamed(context, '/login');
                       } catch (e) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
@@ -164,6 +166,7 @@ class _SignUpState extends State<SignUp> {
                           ),
                         );
                         print(e);
+                        formKey.currentState!.reset();
                       }
 
                       // print('Email: ${emailController.text}');

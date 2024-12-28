@@ -3,21 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:pt_events_app/auth/aut_gate.dart';
 import 'package:pt_events_app/auth/auth_service.dart';
 import 'package:pt_events_app/pages/homepage.dart';
-import 'package:pt_events_app/pages/sign_up.dart';
-import 'routes/routes.dart  ';
 
-class Login extends StatefulWidget {
-  const Login({super.key});
+class ForgotPassword extends StatefulWidget {
+  const ForgotPassword({super.key});
 
   @override
-  State<Login> createState() => _LoginState();
+  State<ForgotPassword> createState() => _ForgotPasswordState();
 }
 
-class _LoginState extends State<Login> {
+class _ForgotPasswordState extends State<ForgotPassword> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
-
+  final confirmPasswordController = TextEditingController();
+  final authService = AuthService();
+  bool passwordVisible = false;
   @override
   void dispose() {
     emailController.dispose();
@@ -52,7 +52,7 @@ class _LoginState extends State<Login> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Login',
+          'Forgot password ',
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
@@ -66,8 +66,8 @@ class _LoginState extends State<Login> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  'Welcome Back!',
+                const Text(
+                  'Reset your password',
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -80,53 +80,40 @@ class _LoginState extends State<Login> {
                     labelText: 'Email',
                     hintText: 'Enter your email',
                     border: OutlineInputBorder(),
+                    prefixIcon: Icon(Icons.email),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your email';
+                    } else if (value != null && !value.contains('@')) {
+                      return 'Please enter a valid email';
                     }
+
                     return null;
                   },
                 ),
                 SizedBox(height: 20),
-                TextFormField(
-                  controller: passwordController,
-                  decoration: InputDecoration(
-                    labelText: 'Password',
-                    hintText: 'Enter your password',
-                    border: OutlineInputBorder(),
-                  ),
-                  obscureText: true,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your password';
-                    }
-                    return null;
-                  },
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    // Navigate to sign-up screen
-                    RichText(
-                        text: TextSpan(
-                      text: "Forgot Password?",
-                      style: TextStyle(color: Colors.blue),
-                      recognizer: TapGestureRecognizer()..onTap = () => Navigator.pushNamed(context, '/forgot-password'),
-                    )),
-                    RichText(
-                        text: TextSpan(
-                      text: "Don't have an account?",
-                      style: TextStyle(color: Colors.blue),
-                      recognizer: TapGestureRecognizer()..onTap = () => Navigator.pushNamed(context, '/signup'),
-                    ))
-                  ],
-                ),
                 SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
-                      checkUser(context, emailController.text, passwordController.text, formKey);
+                      // checkUser(context, emailController.text, passwordController.text, formKey);
+
+                      try {
+                        authService.resetPassword(emailController.text);
+                        Navigator.pushReplacementNamed(context, '/login');
+                      } catch (e) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Invalid email or password: ' + e.toString()),
+                          ),
+                        );
+                        print(e);
+                        formKey.currentState!.reset();
+                      }
+
+                      // print('Email: ${emailController.text}');
+                      // print('Password: ${passwordController.text}');
                     }
                   },
                   child: Text('Login'),
