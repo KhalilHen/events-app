@@ -158,8 +158,15 @@ class _SignUpState extends State<SignUp> {
                           passwordController.text,
                         );
 
+  
+                        
+
                         Navigator.pushReplacementNamed(context, '/login');
-                      } catch (e) {
+                      }
+                      
+                      
+                      
+                       catch (e) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text('Invalid email or password: ' + e.toString()),

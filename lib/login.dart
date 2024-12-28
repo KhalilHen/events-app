@@ -4,6 +4,7 @@ import 'package:pt_events_app/auth/aut_gate.dart';
 import 'package:pt_events_app/auth/auth_service.dart';
 import 'package:pt_events_app/pages/homepage.dart';
 import 'package:pt_events_app/pages/sign_up.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'routes/routes.dart  ';
 
 class Login extends StatefulWidget {
@@ -17,7 +18,7 @@ class _LoginState extends State<Login> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
-
+  final supabase = Supabase.instance.client;
   @override
   void dispose() {
     emailController.dispose();
@@ -27,23 +28,51 @@ class _LoginState extends State<Login> {
 
   Future<void> checkUser(BuildContext context, String email, String password, GlobalKey<FormState> formKey) async {
     if (formKey.currentState!.validate()) {
-      await AuthService().signInWithEmaiPassword(email, password).then((value) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => AuthGate()),
-        ).then((_) {
-          // Clear the form fields after navigation
+      try {
+        await supabase.auth.signInWithOtp(email: email).then((value) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => AuthGate()),
+          ).then((_) {
+            // Clear the form fields after navigation
+            formKey.currentState!.reset();
+          });
+        }).catchError((e) {
           formKey.currentState!.reset();
-        });
-      }).catchError((e) {
-        formKey.currentState!.reset();
 
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Invalid email or password: ' + e.toString()),
-          ),
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Invalid email or password: ' + e.toString()),
+            ),
+          );
+        });
+
+        // await AuthService().signInWithEmaiPassword(email, password).then((value) {
+        //   Navigator.pushReplacement(
+        //     context,
+        //     MaterialPageRoute(builder: (context) => AuthGate()),
+        //   ).then((_) {
+        //     // Clear the form fields after navigation
+        //     formKey.currentState!.reset();
+        //   });
+        // }).catchError((e) {
+        //   formKey.currentState!.reset();
+
+        //   ScaffoldMessenger.of(context).showSnackBar(
+        //     SnackBar(
+        //       content: Text('Invalid email or password: ' + e.toString()),
+        //     ),
+        //   );
+        // });
+      } on AuthException catch (e) {
+        SnackBar(
+          content: Text('Something went wrong with the email or password: ' + e.toString()),
         );
-      });
+      } catch (e) {
+        SnackBar(
+          content: Text('Something went wrong with the email or password: ' + e.toString()),
+        );
+      }
     }
   }
 

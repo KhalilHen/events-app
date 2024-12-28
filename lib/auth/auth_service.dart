@@ -8,8 +8,31 @@ class AuthService {
   }
 
 //Sing up fuction
-  Future<AuthResponse> signUpWithEmaiPassword(String email, String password) async {
-    return await supaBase.auth.signUp(email: email, password: password);
+  Future<AuthResponse?> signUpWithEmaiPassword(String email, String password) async {
+    try {
+      final response = await supaBase.auth.signUp(email: email, password: password);
+
+      if (response.user != null) {
+        final userId = response.user!.id;
+        final insertResponse = await supaBase.from('persons').insert({
+          'id': userId,
+          'username': email,
+        });
+
+        if (insertResponse.error != null) {
+          throw Exception("Database error: ${insertResponse.error?.message}");
+        }
+        print("User created successfully");
+      }
+
+      return response;
+    } on AuthException catch (e) {
+      print(e.message);
+    } catch (e) {
+      print(e);
+
+      throw Exception("Error during signup: $e");
+    }
   }
 
   //Sign out function
@@ -31,7 +54,7 @@ class AuthService {
   String? getLoggedInUserEmail() {
     final session = supaBase.auth.currentSession;
     final user = session?.user;
-    // return user?.; //  TODO 
+    // return user?.; //  TODO
   }
 }
 
