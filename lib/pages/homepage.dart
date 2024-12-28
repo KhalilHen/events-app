@@ -13,8 +13,11 @@ class Homepage extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'Homepage',
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(
+            color: Color(0xFF343A40),
+          ),
         ),
+        backgroundColor: const Color(0xFF007BFF),
       ),
       body: SingleChildScrollView(
         child: Text('Welcome to the Homepage' + getLoggedInUser! ?? 'No user logged in'),
