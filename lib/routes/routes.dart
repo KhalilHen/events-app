@@ -14,7 +14,7 @@ class AppRoutes {
   static Map<String, WidgetBuilder> getRoutes() {
     return {
       authGate: (context) => const AuthGate(),
-      home: (context) => const Homepage(),
+      home: (context) => Homepage(),
       login: (context) => const Login(),
       signup: (context) => const SignUp(),
     };

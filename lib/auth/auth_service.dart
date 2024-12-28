@@ -27,6 +27,12 @@ class AuthService {
     final user = session?.user;
     return user?.email;
   }
+
+  String? getLoggedInUserEmail() {
+    final session = supaBase.auth.currentSession;
+    final user = session?.user;
+    // return user?.; //  TODO 
+  }
 }
 
 // extension on GoTrueClient {
