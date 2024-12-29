@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pt_events_app/auth/aut_gate.dart';
 import 'package:pt_events_app/auth/auth_service.dart';
 import 'package:pt_events_app/pages/homepage.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -12,9 +13,11 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
+
+  final emailController = TextEditingController();
+  final usernameController = TextEditingController();
+  final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
   final authService = AuthService();
   bool passwordVisible = false;
@@ -23,6 +26,21 @@ class _SignUpState extends State<SignUp> {
     emailController.dispose();
     passwordController.dispose();
     super.dispose();
+  }
+
+  Future<bool> isUsernameAvailable(String username) async {
+    final response = await Supabase.instance.client.from('persons').select('username').eq('username', username).execute();
+
+    if (response != null) {
+      return false;
+    }
+    return response.data.isEmpty;
+    // final response = await supaBase.from('persons').select().eq('username', username).execute();
+    // if (response.error != null) {
+    //   throw Exception("Database error: ${response.error?.message}");
+    // }
+
+    // return response.data == null || response.data!.length == 0;
   }
 
   Future<void> checkUser(BuildContext context, String email, String password, GlobalKey<FormState> formKey) async {
@@ -94,6 +112,34 @@ class _SignUpState extends State<SignUp> {
                 ),
                 SizedBox(height: 20),
                 TextFormField(
+                  controller: usernameController,
+                  decoration: InputDecoration(
+                    labelText: 'Username',
+                    hintText: 'Enter your username',
+                    border: OutlineInputBorder(),
+                    prefixIcon: Icon(Icons.person),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your username';
+                    }
+
+                    return null;
+                  },
+                  onFieldSubmitted: (value) async {
+                    final available = await isUsernameAvailable(value);
+
+                    if (!available) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Username already taken'),
+                        ),
+                      );
+                    }
+                  },
+                ),
+                SizedBox(height: 20),
+                TextFormField(
                   controller: passwordController,
                   decoration: InputDecoration(
                     labelText: 'Password',
@@ -128,24 +174,6 @@ class _SignUpState extends State<SignUp> {
                     return null;
                   },
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    // Navigate to sign-up screen
-                    RichText(
-                        text: TextSpan(
-                      text: "Forgot Password?",
-                      style: TextStyle(color: Colors.blue),
-                      recognizer: TapGestureRecognizer()..onTap = () => Navigator.pushNamed(context, '/forgot password'),
-                    )),
-                    RichText(
-                        text: TextSpan(
-                      text: "Don't have an account?",
-                      style: TextStyle(color: Colors.blue),
-                      recognizer: TapGestureRecognizer()..onTap = () => Navigator.pushNamed(context, '/signup'),
-                    ))
-                  ],
-                ),
                 SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
@@ -156,17 +184,11 @@ class _SignUpState extends State<SignUp> {
                         authService.signUpWithEmaiPassword(
                           emailController.text,
                           passwordController.text,
+                          usernameController.text,
                         );
 
-  
-                        
-
                         Navigator.pushReplacementNamed(context, '/login');
-                      }
-                      
-                      
-                      
-                       catch (e) {
+                      } catch (e) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text('Invalid email or password: ' + e.toString()),
@@ -180,7 +202,7 @@ class _SignUpState extends State<SignUp> {
                       // print('Password: ${passwordController.text}');
                     }
                   },
-                  child: Text('Login'),
+                  child: Text('Sign up!'),
                   style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.black,
                     backgroundColor: Colors.white,
@@ -195,4 +217,8 @@ class _SignUpState extends State<SignUp> {
       ),
     );
   }
+}
+
+extension on PostgrestFilterBuilder<PostgrestList> {
+  execute() {}
 }
