@@ -86,7 +86,20 @@ class _SignUpState extends State<SignUp> {
     // final response = await Supabase.instance.client.from('persons').select('username').eq('username', username).execute();
     // final response = await Supabase.instance.client.select('persons').select('username', ).execute();
 
-    final response = await Supabase.instance.client.from('persons').select('username').execute(); //to test whether it can retrieve the whole table
+    try {
+      // final response = await Supabase.instance.client.from('persons').select('username').eq('username', username).single();
+
+      //Use mabyeSingle() instead of single() to avoid GET   error when the username is not found in the database
+      //
+      final response = await Supabase.instance.client.from('persons').select().match({'username': username}).maybeSingle();
+
+      return response == null;
+    } catch (e) {
+      print('Error: $e');
+      throw e;
+    }
+
+    final response = await Supabase.instance.client.from('persons').select('persons').execute(); //to test whether it can retrieve the whole table
 
     print('Response error: ${response.error}');
     print('Full response: $response');
