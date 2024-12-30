@@ -30,7 +30,7 @@ class _LoginState extends State<Login> {
   Future<void> checkUser(BuildContext context, String email, String password, GlobalKey<FormState> formKey) async {
     if (formKey.currentState!.validate()) {
       try {
-        print('Email: $email' 'Password: $password');
+
         await authService.signInWithEmaiPassword(email, password).then((value) {
           Navigator.pushReplacement(
             context,

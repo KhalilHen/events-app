@@ -24,8 +24,9 @@ class _SignUpState extends State<SignUp> {
   final authService = AuthService();
   bool passwordVisible = false;
 
-  bool isNameAvaible = false;
-  bool isEmailAvailable = false;
+  // bool isNameAvaible = false;
+  bool? isNameAvaible;
+  bool? isEmailAvailable;
   String usernameError = '';
   Timer? usernameDebounce;
   Timer? emailDebounce;
@@ -34,10 +35,42 @@ class _SignUpState extends State<SignUp> {
   void initState() {
     super.initState();
 
-    authService.usernameListener(usernameController, checkUsernameAvailability);
-    authService.emailListener(emailController, checkEmailAvailability);
+    usernameListener(usernameController, checkUsernameAvailability);
+    // authService.emailListener(emailController, checkEmailAvailability);
+    emailListener(emailController, checkEmailAvailability);
   }
 
+  void usernameListener(TextEditingController usernameController, Function(String) checkUsernameAvailability) {
+    usernameController.addListener(() {
+      if (usernameDebounce?.isActive ?? false) usernameDebounce?.cancel();
+      usernameDebounce = Timer(const Duration(milliseconds: 500), () {
+        final username = usernameController.text;
+        if (username.length > 3 && authService.isValidUsername(username)) {
+          checkUsernameAvailability(usernameController.text);
+        } else {
+          setState(() {
+            isNameAvaible = false;
+          });
+        }
+      });
+    });
+  }
+
+  emailListener(TextEditingController emailController, Function(String) checkEmailAvailability) {
+    emailController.addListener(() {
+      if (emailDebounce?.isActive ?? false) emailDebounce?.cancel();
+
+      emailDebounce = Timer(const Duration(milliseconds: 2000), () {
+        final email = emailController.text;
+        if (authService.isValidEmail(email)) {
+          checkEmailAvailability(email);
+        } else {
+          setState(() {});
+        }
+        checkEmailAvailability(emailController.text);
+      });
+    });
+  }
   // usernameListener() {
   //   usernameController.addListener(() {
   //     if (usernameDebounce?.isActive ?? false) usernameDebounce?.cancel();
@@ -68,12 +101,12 @@ class _SignUpState extends State<SignUp> {
   }
 
   Future<void> checkUsernameAvailability(String username) async {
-    if (username.isEmpty || username.length < 3) {
-      setState(() {
-        isNameAvaible = false;
-      });
-      return;
-    }
+    // if (username.isEmpty || username.length < 3) {
+    //   setState(() {
+    //     isNameAvaible = false;
+    //   });
+    //   return;
+    // }
 
     try {
       final available = await authService.isUsernameAvailable(username);
@@ -90,12 +123,12 @@ class _SignUpState extends State<SignUp> {
   }
 
   Future<void> checkEmailAvailability(String email) async {
-    if (email.isEmpty || email.length < 3) {
-      setState(() {
-        isEmailAvailable = false;
-      });
-      return;
-    }
+    // if (email.isEmpty || email.length < 3) {
+    //   setState(() {
+    //     isEmailAvailable = false;
+    //   });
+    //   return;
+    // }
 
     try {
       final available = await authService.isEmailAvailable(email);
@@ -145,7 +178,11 @@ class _SignUpState extends State<SignUp> {
                     hintText: 'Enter your email',
                     border: OutlineInputBorder(),
                     prefixIcon: Icon(Icons.email),
-                    suffixIcon: isEmailAvailable ? Icon(Icons.check, color: Colors.green) : Icon(Icons.error, color: Colors.red),
+                    suffixIcon: isEmailAvailable == null
+                        ? null
+                        : isEmailAvailable!
+                            ? Icon(Icons.check, color: Colors.green)
+                            : Icon(Icons.error, color: Colors.red),
                   ),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) {
@@ -153,7 +190,7 @@ class _SignUpState extends State<SignUp> {
                       return 'Please enter your email';
                     } else if (value != null && !value.contains('@')) {
                       return 'Please enter a valid email';
-                    } else if (!isEmailAvailable) {
+                    } else if (isEmailAvailable == false) {
                       return 'This email is already taken';
                     } else if (usernameError.isNotEmpty) {
                       return usernameError;
@@ -172,7 +209,13 @@ class _SignUpState extends State<SignUp> {
                     hintText: 'Enter your username',
                     border: OutlineInputBorder(),
                     prefixIcon: Icon(Icons.person),
-                    suffixIcon: isNameAvaible ? Icon(Icons.check, color: Colors.green) : Icon(Icons.error, color: Colors.red),
+                    // suffixIcon: isNameAvaible ? Icon(Icons.check, color: Colors.green) : Icon(Icons.error, color: Colors.red),
+
+                    suffixIcon: isNameAvaible == null
+                        ? null
+                        : isNameAvaible!
+                            ? Icon(Icons.check, color: Colors.green)
+                            : Icon(Icons.error, color: Colors.red),
                   ),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) {
@@ -180,7 +223,7 @@ class _SignUpState extends State<SignUp> {
                       return 'Please enter your username';
                     } else if (value.length < 3) {
                       return 'Username must be at least 3 characters';
-                    } else if (!isNameAvaible) {
+                    } else if (isNameAvaible == false) {
                       return 'Username already taken';
                     } else if (usernameError.isNotEmpty) {
                       return usernameError;
@@ -242,23 +285,25 @@ class _SignUpState extends State<SignUp> {
                     if (formKey.currentState!.validate()) {
                       // checkUser(context, emailController.text, passwordController.text, formKey);
 
-                      try {
-                        authService.signUpWithEmaiPassword(
-                          emailController.text,
-                          passwordController.text,
-                          usernameController.text,
-                        );
+                      // try {
+                      authService.signUpWithEmaiPassword(
+                        emailController.text,
+                        passwordController.text,
+                        usernameController.text,
+                      );
+                      //TODO Investigate this later it currently sents the user to homepage instead of login
+                      Navigator.pushReplacementNamed(context, '/login');
+                      // }
 
-                        Navigator.pushReplacementNamed(context, '/login');
-                      } catch (e) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('Invalid email or password: ' + e.toString()),
-                          ),
-                        );
-                        print(e);
-                        formKey.currentState!.reset();
-                      }
+                      //  catch (e) {
+                      //   ScaffoldMessenger.of(context).showSnackBar(
+                      //     SnackBar(
+                      //       content: Text('Invalid email or password: ' + e.toString()),
+                      //     ),
+                      //   );
+                      //   print(e);
+                      //   formKey.currentState!.reset();
+                      // }
 
                       // print('Email: ${emailController.text}');
                       // print('Password: ${passwordController.text}');

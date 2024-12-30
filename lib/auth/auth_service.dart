@@ -6,6 +6,7 @@ class AuthService {
   final SupabaseClient supaBase = Supabase.instance.client;
   Timer? usernameDebounce;
   Timer? emailDebounce;
+
   Future<AuthResponse> signInWithEmaiPassword(String email, String password) async {
     return await supaBase.auth.signInWithPassword(password: password, email: email);
   }
@@ -44,6 +45,9 @@ class AuthService {
           'username': username,
         });
 
+        //TODO Fix that  there is a notification for the user that the account has been created successfully
+        SnackBar(content: Text('User created successfully'));
+
         if (insertResponse.error != null) {
           throw Exception("Database error: ${insertResponse.error?.message}");
         }
@@ -81,13 +85,9 @@ class AuthService {
     final user = session?.user;
     // return user?.; //  TODO
   }
-  
-
-
 
   Future<bool> isUsernameAvailable(String username) async {
-
-        try {
+    try {
       // final response = await Supabase.instance.client.from('persons').select('username').eq('username', username).single();
 
       //Use mabyeSingle() instead of single() to avoid GET   error when the username is not found in the database
@@ -103,13 +103,9 @@ class AuthService {
 
     // final response = await Supabase.instance.client.from('persons').select('username').eq('username', username).execute();
     // final response = await Supabase.instance.client.select('persons').select('username', ).execute();
-
-
   }
 
-
-
-    Future<bool> isEmailAvailable(String email) async {
+  Future<bool> isEmailAvailable(String email) async {
     try {
       final response = await Supabase.instance.client.from('persons').select().match({'email': email}).maybeSingle();
 
@@ -118,10 +114,9 @@ class AuthService {
       print('Error: $e');
       throw e;
     }
-
   }
 
-    void usernameListener(TextEditingController usernameController, Function(String)  checkUsernameAvailability) {
+  void usernameListener(TextEditingController usernameController, Function(String) checkUsernameAvailability) {
     usernameController.addListener(() {
       if (usernameDebounce?.isActive ?? false) usernameDebounce?.cancel();
       usernameDebounce = Timer(const Duration(milliseconds: 500), () {
@@ -130,13 +125,13 @@ class AuthService {
     });
   }
 
-  emailListener(TextEditingController emailController, Function(String) checkEmailAvailability) {
-    emailController.addListener(() {
-      if (emailDebounce?.isActive ?? false) emailDebounce?.cancel();
-      emailDebounce = Timer(const Duration(milliseconds: 500), () {
-        checkEmailAvailability(emailController.text);
-      });
-    });
+  bool isValidEmail(String email) {
+    final emailRegex = RegExp(r'^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,}$');
+    return emailRegex.hasMatch(email);
   }
-}
+bool isValidUsername(String username) {
+    final usernameRegex = RegExp(r'^[a-zA-Z0-9_]{3,}$');
+    return usernameRegex.hasMatch(username);
+  }
 
+}
