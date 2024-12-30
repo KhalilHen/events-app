@@ -4,9 +4,8 @@ import 'dart:async';
 
 class AuthService {
   final SupabaseClient supaBase = Supabase.instance.client;
-
-
-
+  Timer? usernameDebounce;
+  Timer? emailDebounce;
   Future<AuthResponse> signInWithEmaiPassword(String email, String password) async {
     return await supaBase.auth.signInWithPassword(password: password, email: email);
   }
@@ -25,10 +24,6 @@ class AuthService {
 
   //   // return response.data == null || response.data!.length == 0;
   // }
-
-
-
-
 
 //Sing up fuction
   Future<AuthResponse?> signUpWithEmaiPassword(String email, String password, String username) async {
@@ -86,8 +81,62 @@ class AuthService {
     final user = session?.user;
     // return user?.; //  TODO
   }
+  
+
+
+
+  Future<bool> isUsernameAvailable(String username) async {
+
+        try {
+      // final response = await Supabase.instance.client.from('persons').select('username').eq('username', username).single();
+
+      //Use mabyeSingle() instead of single() to avoid GET   error when the username is not found in the database
+      //
+      final response = await Supabase.instance.client.from('persons').select().match({'username': username}).maybeSingle();
+
+      return response == null;
+    } catch (e) {
+      print('Error: $e');
+      throw e;
+    }
+    // if (username.isEmpty) {}
+
+    // final response = await Supabase.instance.client.from('persons').select('username').eq('username', username).execute();
+    // final response = await Supabase.instance.client.select('persons').select('username', ).execute();
+
+
+  }
+
+
+
+    Future<bool> isEmailAvailable(String email) async {
+    try {
+      final response = await Supabase.instance.client.from('persons').select().match({'email': email}).maybeSingle();
+
+      return response == null;
+    } catch (e) {
+      print('Error: $e');
+      throw e;
+    }
+
+  }
+
+    void usernameListener(TextEditingController usernameController, Function(String)  checkUsernameAvailability) {
+    usernameController.addListener(() {
+      if (usernameDebounce?.isActive ?? false) usernameDebounce?.cancel();
+      usernameDebounce = Timer(const Duration(milliseconds: 500), () {
+        checkUsernameAvailability(usernameController.text);
+      });
+    });
+  }
+
+  emailListener(TextEditingController emailController, Function(String) checkEmailAvailability) {
+    emailController.addListener(() {
+      if (emailDebounce?.isActive ?? false) emailDebounce?.cancel();
+      emailDebounce = Timer(const Duration(milliseconds: 500), () {
+        checkEmailAvailability(emailController.text);
+      });
+    });
+  }
 }
 
-// extension on GoTrueClient {
-//   get api => null;
-// }

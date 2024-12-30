@@ -20,24 +20,41 @@ class _SignUpState extends State<SignUp> {
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
+
   final authService = AuthService();
   bool passwordVisible = false;
 
-  bool isAvaible = false;
+  bool isNameAvaible = false;
+  bool isEmailAvailable = false;
   String usernameError = '';
-  Timer? debounce;
+  Timer? usernameDebounce;
+  Timer? emailDebounce;
 
   @override
   void initState() {
     super.initState();
 
-    usernameController.addListener(() {
-      if (debounce?.isActive ?? false) debounce?.cancel();
-      debounce = Timer(const Duration(milliseconds: 500), () {
-        checkUsernameAvailability(usernameController.text);
-      });
-    });
+    authService.usernameListener(usernameController, checkUsernameAvailability);
+    authService.emailListener(emailController, checkEmailAvailability);
   }
+
+  // usernameListener() {
+  //   usernameController.addListener(() {
+  //     if (usernameDebounce?.isActive ?? false) usernameDebounce?.cancel();
+  //     usernameDebounce = Timer(const Duration(milliseconds: 500), () {
+  //       checkUsernameAvailability(usernameController.text);
+  //     });
+  //   });
+  // }
+
+  // emailListener() {
+  //   emailController.addListener(() {
+  //     if (emailDebounce?.isActive ?? false) emailDebounce?.cancel();
+  //     emailDebounce = Timer(const Duration(milliseconds: 500), () {
+  //       checkEmailAvailability(emailController.text);
+  //     });
+  //   });
+  // }
 
   @override
   void dispose() {
@@ -45,103 +62,52 @@ class _SignUpState extends State<SignUp> {
     passwordController.dispose();
 
     usernameController.dispose();
-    debounce?.cancel();
+    usernameDebounce?.cancel();
+    emailDebounce?.cancel();
     super.dispose();
   }
 
   Future<void> checkUsernameAvailability(String username) async {
-    if (username.isEmpty) {
+    if (username.isEmpty || username.length < 3) {
       setState(() {
-        usernameError = 'Username cannot be empty';
-        isAvaible = false;
+        isNameAvaible = false;
       });
       return;
     }
-    if (username.length < 3) {
-      setState(() {
-        usernameError = 'Username must be at least 3 characters';
-        isAvaible = false;
-      });
-      return;
-    }
+
     try {
-      final available = await isUsernameAvailable(username);
+      final available = await authService.isUsernameAvailable(username);
       setState(() {
-        isAvaible = available;
-        usernameError = available ? '' : 'This username is already taken';
+        isNameAvaible = available;
       });
     } catch (e) {
       setState(() {
-        isAvaible = false;
+        isNameAvaible = false;
         usernameError = 'An error occurred while checking the username';
       });
       print(e);
     }
-    // Call the Supabase function
   }
 
-  Future<bool> isUsernameAvailable(String username) async {
-    // if (username.isEmpty) {}
-
-    // final response = await Supabase.instance.client.from('persons').select('username').eq('username', username).execute();
-    // final response = await Supabase.instance.client.select('persons').select('username', ).execute();
+  Future<void> checkEmailAvailability(String email) async {
+    if (email.isEmpty || email.length < 3) {
+      setState(() {
+        isEmailAvailable = false;
+      });
+      return;
+    }
 
     try {
-      // final response = await Supabase.instance.client.from('persons').select('username').eq('username', username).single();
-
-      //Use mabyeSingle() instead of single() to avoid GET   error when the username is not found in the database
-      //
-      final response = await Supabase.instance.client.from('persons').select().match({'username': username}).maybeSingle();
-
-      return response == null;
-    } catch (e) {
-      print('Error: $e');
-      throw e;
-    }
-
-    final response = await Supabase.instance.client.from('persons').select('persons').execute(); //to test whether it can retrieve the whole table
-
-    print('Response error: ${response.error}');
-    print('Full response: $response');
-
-    if (response.error != null) {
-      throw Exception("Database error: ${response.error?.message}");
-      // return false;
-    }
-
-    if (response.data is List && response.data.isEmpty) {
-      return true; // Username is available
-    }
-
-    return response.data.isEmpty;
-
-    // final response = await supaBase.from('persons').select().eq('username', username).execute();
-    // if (response.error != null) {
-    //   throw Exception("Database error: ${response.error?.message}");
-    // }
-
-    // return response.data == null || response.data!.length == 0;
-  }
-
-  Future<void> checkUser(BuildContext context, String email, String password, GlobalKey<FormState> formKey) async {
-    if (formKey.currentState!.validate()) {
-      await AuthService().signInWithEmaiPassword(email, password).then((value) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => AuthGate()),
-        ).then((_) {
-          // Clear the form fields after navigation
-          formKey.currentState!.reset();
-        });
-      }).catchError((e) {
-        formKey.currentState!.reset();
-
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Invalid email or password: ' + e.toString()),
-          ),
-        );
+      final available = await authService.isEmailAvailable(email);
+      setState(() {
+        isEmailAvailable = available;
       });
+    } catch (e) {
+      setState(() {
+        isEmailAvailable = false;
+        usernameError = 'An error occurred while checking the username';
+      });
+      print(e);
     }
   }
 
@@ -179,13 +145,21 @@ class _SignUpState extends State<SignUp> {
                     hintText: 'Enter your email',
                     border: OutlineInputBorder(),
                     prefixIcon: Icon(Icons.email),
+                    suffixIcon: isEmailAvailable ? Icon(Icons.check, color: Colors.green) : Icon(Icons.error, color: Colors.red),
                   ),
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your email';
                     } else if (value != null && !value.contains('@')) {
                       return 'Please enter a valid email';
+                    } else if (!isEmailAvailable) {
+                      return 'This email is already taken';
+                    } else if (usernameError.isNotEmpty) {
+                      return usernameError;
                     }
+
+                    // else if ()
 
                     return null;
                   },
@@ -198,7 +172,7 @@ class _SignUpState extends State<SignUp> {
                     hintText: 'Enter your username',
                     border: OutlineInputBorder(),
                     prefixIcon: Icon(Icons.person),
-                    suffixIcon: isAvaible ? Icon(Icons.check, color: Colors.green) : Icon(Icons.error, color: Colors.red),
+                    suffixIcon: isNameAvaible ? Icon(Icons.check, color: Colors.green) : Icon(Icons.error, color: Colors.red),
                   ),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) {
@@ -206,7 +180,7 @@ class _SignUpState extends State<SignUp> {
                       return 'Please enter your username';
                     } else if (value.length < 3) {
                       return 'Username must be at least 3 characters';
-                    } else if (!isAvaible) {
+                    } else if (!isNameAvaible) {
                       return 'Username already taken';
                     } else if (usernameError.isNotEmpty) {
                       return usernameError;
