@@ -1,8 +1,11 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter/material.dart';
+import 'dart:async';
 
 class AuthService {
   final SupabaseClient supaBase = Supabase.instance.client;
+
+
 
   Future<AuthResponse> signInWithEmaiPassword(String email, String password) async {
     return await supaBase.auth.signInWithPassword(password: password, email: email);
@@ -22,6 +25,10 @@ class AuthService {
 
   //   // return response.data == null || response.data!.length == 0;
   // }
+
+
+
+
 
 //Sing up fuction
   Future<AuthResponse?> signUpWithEmaiPassword(String email, String password, String username) async {

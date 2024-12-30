@@ -4,6 +4,7 @@ import 'package:pt_events_app/auth/aut_gate.dart';
 import 'package:pt_events_app/auth/auth_service.dart';
 import 'package:pt_events_app/pages/homepage.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'dart:async';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -21,20 +22,86 @@ class _SignUpState extends State<SignUp> {
   final confirmPasswordController = TextEditingController();
   final authService = AuthService();
   bool passwordVisible = false;
+
+  bool isAvaible = false;
+  String usernameError = '';
+  Timer? debounce;
+
+  @override
+  void initState() {
+    super.initState();
+
+    usernameController.addListener(() {
+      if (debounce?.isActive ?? false) debounce?.cancel();
+      debounce = Timer(const Duration(milliseconds: 500), () {
+        checkUsernameAvailability(usernameController.text);
+      });
+    });
+  }
+
   @override
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
+
+    usernameController.dispose();
+    debounce?.cancel();
     super.dispose();
   }
 
-  Future<bool> isUsernameAvailable(String username) async {
-    final response = await Supabase.instance.client.from('persons').select('username').eq('username', username).execute();
-
-    if (response != null) {
-      return false;
+  Future<void> checkUsernameAvailability(String username) async {
+    if (username.isEmpty) {
+      setState(() {
+        usernameError = 'Username cannot be empty';
+        isAvaible = false;
+      });
+      return;
     }
+    if (username.length < 3) {
+      setState(() {
+        usernameError = 'Username must be at least 3 characters';
+        isAvaible = false;
+      });
+      return;
+    }
+    try {
+      final available = await isUsernameAvailable(username);
+      setState(() {
+        isAvaible = available;
+        usernameError = available ? '' : 'This username is already taken';
+      });
+    } catch (e) {
+      setState(() {
+        isAvaible = false;
+        usernameError = 'An error occurred while checking the username';
+      });
+      print(e);
+    }
+    // Call the Supabase function
+  }
+
+  Future<bool> isUsernameAvailable(String username) async {
+    // if (username.isEmpty) {}
+
+    // final response = await Supabase.instance.client.from('persons').select('username').eq('username', username).execute();
+    // final response = await Supabase.instance.client.select('persons').select('username', ).execute();
+
+    final response = await Supabase.instance.client.from('persons').select('username').execute(); //to test whether it can retrieve the whole table
+
+    print('Response error: ${response.error}');
+    print('Full response: $response');
+
+    if (response.error != null) {
+      throw Exception("Database error: ${response.error?.message}");
+      // return false;
+    }
+
+    if (response.data is List && response.data.isEmpty) {
+      return true; // Username is available
+    }
+
     return response.data.isEmpty;
+
     // final response = await supaBase.from('persons').select().eq('username', username).execute();
     // if (response.error != null) {
     //   throw Exception("Database error: ${response.error?.message}");
@@ -118,25 +185,33 @@ class _SignUpState extends State<SignUp> {
                     hintText: 'Enter your username',
                     border: OutlineInputBorder(),
                     prefixIcon: Icon(Icons.person),
+                    suffixIcon: isAvaible ? Icon(Icons.check, color: Colors.green) : Icon(Icons.error, color: Colors.red),
                   ),
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your username';
+                    } else if (value.length < 3) {
+                      return 'Username must be at least 3 characters';
+                    } else if (!isAvaible) {
+                      return 'Username already taken';
+                    } else if (usernameError.isNotEmpty) {
+                      return usernameError;
                     }
 
                     return null;
                   },
-                  onFieldSubmitted: (value) async {
-                    final available = await isUsernameAvailable(value);
+                  // onFieldSubmitted: (value) async {
+                  //   final available = await isUsernameAvailable(value);
 
-                    if (!available) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Username already taken'),
-                        ),
-                      );
-                    }
-                  },
+                  //   if (!available) {
+                  //     ScaffoldMessenger.of(context).showSnackBar(
+                  //       SnackBar(
+                  //         content: Text('Username already taken'),
+                  //       ),
+                  //     );
+                  //   }
+                  // },
                 ),
                 SizedBox(height: 20),
                 TextFormField(

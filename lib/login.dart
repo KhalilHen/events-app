@@ -19,6 +19,7 @@ class _LoginState extends State<Login> {
   final passwordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   final supabase = Supabase.instance.client;
+  final authService = AuthService();
   @override
   void dispose() {
     emailController.dispose();
@@ -29,7 +30,8 @@ class _LoginState extends State<Login> {
   Future<void> checkUser(BuildContext context, String email, String password, GlobalKey<FormState> formKey) async {
     if (formKey.currentState!.validate()) {
       try {
-        await supabase.auth.signInWithOtp(email: email).then((value) {
+        print('Email: $email' 'Password: $password');
+        await authService.signInWithEmaiPassword(email, password).then((value) {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => AuthGate()),
@@ -46,6 +48,23 @@ class _LoginState extends State<Login> {
             ),
           );
         });
+        // await supabase.auth.signInWithOtp(email: email).then((value) {
+        //   Navigator.pushReplacement(
+        //     context,
+        //     MaterialPageRoute(builder: (context) => AuthGate()),
+        //   ).then((_) {
+        //     // Clear the form fields after navigation
+        //     formKey.currentState!.reset();
+        //   });
+        // }).catchError((e) {
+        //   formKey.currentState!.reset();
+
+        //   ScaffoldMessenger.of(context).showSnackBar(
+        //     SnackBar(
+        //       content: Text('Invalid email or password: ' + e.toString()),
+        //     ),
+        //   );
+        // });
 
         // await AuthService().signInWithEmaiPassword(email, password).then((value) {
         //   Navigator.pushReplacement(
