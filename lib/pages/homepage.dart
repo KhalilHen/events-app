@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pt_events_app/auth/auth_service.dart';
 import 'package:pt_events_app/auth/aut_gate.dart';
 import 'package:supabase/supabase.dart';
+import '../routes/routes.dart';
 
 class Homepage extends StatefulWidget {
   Homepage({super.key});
@@ -83,38 +84,55 @@ class _HomepageState extends State<Homepage> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(items: [
-        BottomNavigationBarItem(
-            icon: IconButton(
-              onPressed: () {
-                setState(() {
-                  currentIndex = 0;
-                });
-              },
-              icon: Icon(Icons.home),
-            ),
-            label: 'Home'),
-        BottomNavigationBarItem(
-            icon: IconButton(
-              onPressed: () {
-                setState(() {
-                  currentIndex = 1;
-                });
-              },
-              icon: Icon(Icons.event),
-            ),
-            label: 'Events'),
-        BottomNavigationBarItem(
-            icon: IconButton(
-              onPressed: () {
-                setState(() {
-                  currentIndex = 2;
-                });
-              },
-              icon: Icon(Icons.person),
-            ),
-            label: 'Profile'),
-      ]),
+      bottomNavigationBar: BottomNavigationBar(
+          onTap: (index) {
+            setState(() {
+              currentIndex = index;
+            });
+            switch (index) {
+              case 0:
+                Navigator.pushReplacementNamed(context, '/home');
+                break;
+              case 1:
+                Navigator.pushReplacementNamed(context, '/event');
+                break;
+              case 2:
+                Navigator.pushReplacementNamed(context, '/profile');
+                break;
+            }
+          },
+          items: [
+            BottomNavigationBarItem(
+                icon: IconButton(
+                  onPressed: () {
+                    setState(() {
+                      currentIndex = 0;
+                    });
+                  },
+                  icon: Icon(Icons.home),
+                ),
+                label: 'Home'),
+            BottomNavigationBarItem(
+                icon: IconButton(
+                  onPressed: () {
+                    setState(() {
+                      currentIndex = 1;
+                    });
+                  },
+                  icon: Icon(Icons.event),
+                ),
+                label: 'Events'),
+            BottomNavigationBarItem(
+                icon: IconButton(
+                  onPressed: () {
+                    setState(() {
+                      currentIndex = 2;
+                    });
+                  },
+                  icon: Icon(Icons.person),
+                ),
+                label: 'Profile'),
+          ]),
     );
   }
 }
