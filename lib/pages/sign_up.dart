@@ -55,6 +55,7 @@ class _SignUpState extends State<SignUp> {
       });
     });
   }
+  
 
   emailListener(TextEditingController emailController, Function(String) checkEmailAvailability) {
     emailController.addListener(() {

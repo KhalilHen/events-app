@@ -74,17 +74,40 @@ class AuthService {
     return await supaBase.auth.resetPasswordForEmail(email);
   }
 
-  String? getLoggedInUser() {
+  Future<String?> getLoggedInUsername() async {
     final session = supaBase.auth.currentSession;
-    final user = session?.user;
-    return user?.email;
+    final userId = session?.user.id; 
+
+    if (userId == null) {
+      print('No authenticated user found.');
+      return null; 
+    }
+
+    print('Authenticated User ID: $userId');
+
+    // Query the persons table using the user's UUID
+    final response = await supaBase
+        .from('persons')
+        .select('username') 
+        .eq('id', userId) 
+        .maybeSingle(); 
+
+    if (response == null) {
+      print('No matching person found for user ID: $userId');
+      return null; 
+    }
+
+
+    final username = response['username'] as String?;
+    print('Username: $username');
+    return username;
   }
 
-  String? getLoggedInUserEmail() {
-    final session = supaBase.auth.currentSession;
-    final user = session?.user;
-    // return user?.; //  TODO
-  }
+  // String? getLoggedInUserEmail() {
+  //   final session = supaBase.auth.currentSession;
+  //   final user = session?.user;
+  //   // return user?.; //  TODO
+  // }
 
   Future<bool> isUsernameAvailable(String username) async {
     try {
@@ -129,9 +152,9 @@ class AuthService {
     final emailRegex = RegExp(r'^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,}$');
     return emailRegex.hasMatch(email);
   }
-bool isValidUsername(String username) {
+
+  bool isValidUsername(String username) {
     final usernameRegex = RegExp(r'^[a-zA-Z0-9_]{3,}$');
     return usernameRegex.hasMatch(username);
   }
-
 }

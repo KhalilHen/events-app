@@ -12,12 +12,28 @@ class Homepage extends StatefulWidget {
 
 class _HomepageState extends State<Homepage> {
   final authService = AuthService();
+  String? username;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchUsername();
+  }
+
+  Future<void> fetchUsername() async {
+    final fetchedUsername = await authService.getLoggedInUsername();
+    setState(() {
+      username = fetchedUsername ?? 'No user logged in';
+    });
+  }
+
+  void testy() {}
 
   @override
   Widget build(BuildContext context) {
     int currentIndex = 0;
-
-    final getLoggedInUser = AuthService().getLoggedInUser();
+    final authService = AuthService();
+    // final username = AuthService().getLoggedInUsername();
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
@@ -45,7 +61,10 @@ class _HomepageState extends State<Homepage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text('Welcome ' + (getLoggedInUser ?? 'No user logged in'), style: Theme.of(context).textTheme.titleMedium),
+                Text(
+                  'Welcome, $username!',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
                 SizedBox(height: 25),
                 Text('Your signed up of featured evens/activities ', style: Theme.of(context).textTheme.titleMedium),
                 SizedBox(height: 20),
