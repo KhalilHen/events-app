@@ -6,6 +6,7 @@ import 'package:pt_events_app/pages/event.dart';
 import 'package:pt_events_app/pages/forgot_password.dart';
 import 'package:pt_events_app/pages/homepage.dart';
 import 'package:pt_events_app/pages/sign_up.dart';
+import 'package:pt_events_app/pages/test.dart';
 import 'package:pt_events_app/routes/routes.dart';
 // import 'package:pt_events_app/pages/homepage.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -13,7 +14,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  
+
 
   runApp(MyApp());
 }
@@ -45,14 +46,14 @@ class MyApp extends StatelessWidget {
 
       // home: const SignUp(),
       // home: const AuthGate(),
-      home:  Event(), //Temporarily while working on the  events page
+      home: EventPage(), //Temporarily while working on the  events page
       routes: {
         AppRoutes.authGate: (context) => const AuthGate(),
         AppRoutes.login: (context) => const Login(),
         AppRoutes.home: (context) => Homepage(),
         AppRoutes.signup: (context) => const SignUp(),
         AppRoutes.forgotPassword: (context) => const ForgotPassword(),
-        AppRoutes.event: (context) => Event(),
+        AppRoutes.event: (context) => EventPage(),
       },
     );
   }

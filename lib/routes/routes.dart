@@ -4,6 +4,7 @@ import 'package:pt_events_app/login.dart';
 import 'package:pt_events_app/pages/homepage.dart';
 import 'package:pt_events_app/pages/sign_up.dart';
 import 'package:pt_events_app/pages/event.dart';
+
 class AppRoutes {
   static const String authGate = '/auth_gate';
   static const String home = '/homepage';
@@ -18,7 +19,7 @@ class AppRoutes {
       home: (context) => Homepage(),
       login: (context) => const Login(),
       signup: (context) => const SignUp(),
-      event : (context) =>  Event(),
+      event : (context) =>  EventPage(),
     };
   }
 }
