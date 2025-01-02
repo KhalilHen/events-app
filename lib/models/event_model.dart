@@ -1,31 +1,38 @@
 import 'package:flutter/material.dart';
 import '../controllers/event_controllers.dart';
+
 class Event {
-  //for now to test first if  title works
   final String title;
   // final String description;
-  // final String date;
+  final DateTime startDate;
+  final DateTime endDate;
   // final String time;
   // final String location;
   // final String image;
 
   Event({
     required this.title,
-    // this.description,
-    // this.date,
-    // this.time,
-    // this.location,
-    // this.image
+    // required this.description,
+    required this.startDate,
+    required this.endDate,
+    // required this.time,
+    // required this.location,
+    // required this.image
   });
 
   factory Event.fromMap(Map<String, dynamic> data) {
     return Event(
-      title: data['title'],
+      title: data['title'], //When i change this into something that isn't equal in the DB then it will give no events
+      //But start date i have correct but it still gives no events
+
       // description: data['description'],
-      // date: data['date'],
-      // time: data['time'],
+      // startDate: data['start_date'],
+      startDate: DateTime.parse(data['start_date']),
+
+      endDate: DateTime.parse(data['end_date']),
+
       // location: data['location'],
-      // image: data['image']
+      //  image: data['image']
     );
   }
 }

@@ -6,6 +6,7 @@ import '../controllers/event_controllers.dart';
 import '../routes/routes.dart';
 
 import '../models/event_model.dart';
+import 'package:intl/intl.dart';
 
 class EventPage extends StatefulWidget {
   EventPage({Key? key}) : super(key: key);
@@ -132,10 +133,30 @@ class _EventState extends State<EventPage> {
                                   SizedBox(height: 2),
                                   Row(
                                     //Date container
+                                    
                                     children: [
                                       //Maby a  invidual  row for time
                                       Wrap(
-                                        children: [Text('mon, 01 Jan  2025'), Text('12:00')],
+                                        children: [
+                                          // Text(event.startDate ?? 'There is no date found'),
+                                          Icon(
+                                            Icons.calendar_today,
+                                            size: 16,
+                                            color: Color(0xFF007BFF),
+                                          ),
+                                          // const SizedBox(width: 8),
+                                          const SizedBox(width: 3),
+                                          Text(
+                                            // DateFormat('dd-MM-yyyy').format(event.startDate),
+
+                                            DateFormat('yyyy-MM-dd').format(event.startDate),
+                                          ),
+                                          Text(' - '),
+                                          Text(DateFormat('MM-dd-yyyy').format(event.endDate) // Access endDate from the Event object
+                                              ),
+
+                                          const SizedBox(width: 8),
+                                        ],
                                       )
                                     ],
                                   ),
@@ -144,7 +165,11 @@ class _EventState extends State<EventPage> {
 
                                   Row(
                                     children: [
-                                      Text('Event Location'),
+                                      Text(
+
+                                          // event.location
+                                          //  ??
+                                          'test location'),
                                     ],
                                   ),
                                   SizedBox(height: 15),
