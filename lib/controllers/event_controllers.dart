@@ -52,10 +52,11 @@ class EventControllers {
       print('User logged in with ID: $userId');
 
       // Insert the user_id and event_id into the participants table
-      final response = await supabase.from('participants').insert({
+      final response = await supabase.from('partcipants').insert({
         'user_id': userId,
         'event_id': eventId,
       });
+      print('Response: ${response.data}');
 
       if (response.error == null) {
         print('Successfully registered for the event');
@@ -63,14 +64,7 @@ class EventControllers {
         print('Error inserting into participants table: ${response.error.message}');
       }
     } catch (e) {
-      final userId = await authService.getLoggedInUser();
-
-      print(eventId); //this works
-      print(userId); // works also normally
-
       print('Error participating in event: $e');
-      // print(userId);
-      print(eventId);
     }
   }
 }
