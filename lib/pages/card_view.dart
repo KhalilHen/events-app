@@ -68,25 +68,53 @@ class ExpandedCardView extends StatelessWidget {
                           event.title,
                           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                         ),
-                        const Row(
+                        Row(
                           // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
+                            Padding(padding: const EdgeInsets.only(left: 5)),
                             //Row container for date,  time
+                            Icon(
+                              Icons.calendar_today,
+                              size: 15,
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
                             Text(
-                              '2024-05-20',
+                              // event.startDate,
+                              DateFormat('dd-MM-yyyy').format(event.startDate),
+
+                              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                            ),
+
+                            Icon(
+                              Icons.minimize,
+                              size: 15,
+                            ),
+                            // Text(
+                            //   ' - ',
+                            //   style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
+                            //   // DateForm(event.startDate)
+                            // ),
+                            Text(
+                              DateFormat('dd-MM-yyyy').format(event.endDate),
+
                               style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                               // DateForm(event.startDate)
                             ),
-                            Text(
-                              ' - ',
-                              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                              // DateForm(event.startDate)
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Padding(padding: const EdgeInsets.only(left: 5)),
+                            Icon(
+                              Icons.access_time,
+                              size: 15,
                             ),
-                            Text(
-                              '16:00',
-                              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                              // DateForm(event.startDate)
+                            SizedBox(
+                              width: 5,
                             ),
+                            Text('16:00 - 18:00', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
                           ],
                         ),
                         //Description Container
@@ -145,7 +173,74 @@ class ExpandedCardView extends StatelessWidget {
                             //   ),
                             // ),
                           ],
-                        )
+                        ),
+                        const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              '---------------------------------------------------------------- ',
+                              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                        //Location Container
+                        const Column(
+                          children: [
+                            Row(
+                              children: [
+                                Padding(padding: const EdgeInsets.only(left: 5)),
+                                Icon(
+                                  Icons.location_on,
+                                  size: 15,
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text('Location:', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Padding(padding: const EdgeInsets.only(left: 5)),
+                                Text(' Amsterdam Centraal', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+                              ],
+                            ),
+
+                            //TODO Mabye in the future here a Google maps/Apple maps intergration
+                          ],
+                        ),
+                        Padding(padding: const EdgeInsets.only(top: 60)),
+                        //Addtional information container
+                        Column(
+                          children: [
+                            Center(
+                              child: Text(
+                                'Additional Information',
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            const Padding(
+                              padding: const EdgeInsets.only(left: 10.0),
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Wrap(
+                                  alignment: WrapAlignment.start,
+                                  spacing: 8.0,
+                                  runSpacing: 4.0,
+                                  children: [
+                                    Text(
+                                      'lorem ipsum dolor sit amet  ',
+                                      softWrap: true,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
 
                         // ],
                       ],
