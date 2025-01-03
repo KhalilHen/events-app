@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../controllers/event_controllers.dart';
 
 class Event {
-  // final int id;
+  final int id;
   final String title;
   final String description;
   final DateTime startDate;
@@ -12,7 +12,7 @@ class Event {
   // final String image;
 
   Event({
-    // required this.id,
+    required this.id,
     required this.title,
     required this.description,
     required this.startDate,
@@ -24,7 +24,7 @@ class Event {
 
   factory Event.fromMap(Map<String, dynamic> data) {
     return Event(
-      // id: data['id'],
+      id: data['id'],
       title: data['title'], //When i change this into something that isn't equal in the DB then it will give no events
       //But start date i have correct but it still gives no events
 

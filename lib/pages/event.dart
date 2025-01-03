@@ -86,7 +86,7 @@ class _EventState extends State<EventPage> {
 
                     child: GestureDetector(
                       onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => ExpandedCardView(event: event))),
-
+                      // onTap: () =>  Navigator.pushNamed(context, '/detailedEvent', arguments: event),
                       //  Navigator.pushNamed(context, AppRoutes.event, arguments: event),
                       child: Hero(
                         // tag: event.id,
@@ -193,7 +193,13 @@ class _EventState extends State<EventPage> {
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           ElevatedButton(
-                                            onPressed: null,
+                                            // onPressed: eventControllers.partcipateEvent,
+                                            onPressed: () {
+                                              eventControllers.participateEvent(event.id); //Pass the event id to the function
+                                              // eventControllers.participateEvent(event.id.toString()); //Pass the event id to the function
+                                              // print(event.id.toString());
+                                            },
+
                                             child: Text('Register'),
                                           ),
                                           ElevatedButton(onPressed: null, child: Text('More info') //Or Contact not sure yet,

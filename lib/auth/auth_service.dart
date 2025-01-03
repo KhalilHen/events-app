@@ -74,29 +74,38 @@ class AuthService {
     return await supaBase.auth.resetPasswordForEmail(email);
   }
 
+  Future<String?> getLoggedInUser() async {
+    final session = supaBase.auth.currentSession;
+    final User = session?.user.id;
+
+    if (User == null) {
+      print('No authenticated user found.');
+      return null;
+    }
+
+    print('Authenticated User ID: $User');
+
+    return User;
+  }
+
   Future<String?> getLoggedInUsername() async {
     final session = supaBase.auth.currentSession;
-    final userId = session?.user.id; 
+    final userId = session?.user.id;
 
     if (userId == null) {
       print('No authenticated user found.');
-      return null; 
+      return null;
     }
 
     print('Authenticated User ID: $userId');
 
     // Query the persons table using the user's UUID
-    final response = await supaBase
-        .from('persons')
-        .select('username') 
-        .eq('id', userId) 
-        .maybeSingle(); 
+    final response = await supaBase.from('persons').select('username').eq('id', userId).maybeSingle();
 
     if (response == null) {
       print('No matching person found for user ID: $userId');
-      return null; 
+      return null;
     }
-
 
     final username = response['username'] as String?;
     print('Username: $username');
