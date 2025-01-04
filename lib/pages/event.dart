@@ -212,7 +212,7 @@ class _EventState extends State<EventPage> {
                                 ),
                                 // ElevatedButton(
                                 //   onPressed: () {
-                                //     eventControllers.retrieveEvents(); //Too test whether it correctly retrieves the events
+                                //     eventControllers.retrteveEvents(); //Too test whether it correctly retrieves the events
                                 //   },
                                 //   child: Text('View Event'),
                                 // ),
