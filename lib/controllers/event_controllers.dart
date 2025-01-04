@@ -49,18 +49,29 @@ class EventControllers {
       }
       final response = await supabase.from('partcipants').select('event_id').eq('user_id', userId);
 
-      if (response == null) {
+      if (response == null || response.isEmpty) {
         print('Error retrieving user events: $response');
         return [];
       }
       print(response);
+      // final eventId = response.map((row) => row['event_id'] as int).toList();
+      // final eventId = response.map((row) => row['event_id'] as int).toList();
+      final eventId = (response as List<dynamic>).map((row) => row['event_id'] as int).toList();
 
       // final eventData =
-      final eventData = await supabase.from('events').select().eq('id', response); //this should retrieve the events  rows which match  the event_id in the participants table
+      // final eventData = await supabase.from('events').select().eq('id', response); //this should retrieve the events  rows which match  the event_id in the participants table
       // final data = response as List<dynamic>;
-
+      final eventData = await supabase.from('events').select().inFilter('id', eventId);
       print(eventData);
-      return eventData as List<Event>;
+
+      if (eventData == null || eventData.isEmpty) {
+        print("no matching events found");
+        return [];
+      }
+
+      return (eventData as List<dynamic>).map((data) => Event.fromMap(data as Map<String, dynamic>)).toList();
+
+      // return eventData as List<Event>;
 
       // return data.map((e) => Event.fromMap(e as Map<String, dynamic>)).toList();
 
