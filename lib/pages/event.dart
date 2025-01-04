@@ -46,10 +46,7 @@ class _EventState extends State<EventPage> {
         // padding: const EdgeInsets.all(8.0),
         padding: EdgeInsets.only(top: 30),
         child: FutureBuilder<List<Event>>(
-            // future: eventControllers.retrieveEvents() as Future<List<Event>>?,
-            // future: eventControllers.retrieveEvents(),
-            // future: eventControllers.retrieveEvents,
-            // future: retrieveEvents,
+       
             future: eventControllers.retrieveEvents(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
