@@ -84,7 +84,7 @@ class AuthService {
       return null;
     }
 
-    print('Authenticated User ID: $User');
+    // print('Authenticated User ID: $User');
 
     return User;
   }

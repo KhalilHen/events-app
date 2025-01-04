@@ -135,11 +135,16 @@ class EventControllers {
             userId,
           )
           .eq('event_id', eventId);
-      debugPrint('Response: ${response.data}');
-      if (response.error == null) {
-        debugPrint('Successfully left the event');
+
+      if (response != null) {
+        debugPrint('Response: ${response.data}');
+        if (response.error == null) {
+          debugPrint('Successfully left the event');
+        } else {
+          debugPrint('Error deleting from participants table: ${response.error.message}');
+        }
       } else {
-        debugPrint('Error deleting from participants table: ${response.error.message}');
+        debugPrint('Response is null');
       }
     } catch (e) {
       debugPrint('Error leaving event: $e');
