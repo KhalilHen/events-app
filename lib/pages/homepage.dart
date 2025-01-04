@@ -44,7 +44,7 @@ class _HomepageState extends State<Homepage> {
         actions: [
           IconButton(
               onPressed: () {
-                authService.signOut();
+                authService.signOut(context);
               },
               icon: Icon(Icons.logout)),
         ],
@@ -66,7 +66,7 @@ class _HomepageState extends State<Homepage> {
             ),
             SizedBox(height: 16),
             SizedBox(
-              height: 350, // Fixed height for the horizontal scroll section
+              height: 400, // Fixed height for the horizontal scroll section
               child: FutureBuilder<List<Event>>(
                 future: eventController.retrieveUserEvents(),
                 builder: (context, snapshot) {
@@ -155,6 +155,30 @@ class _HomepageState extends State<Homepage> {
                                   ],
                                 ),
                               ),
+                              Spacer(),
+                              Padding(
+                                padding: EdgeInsets.all(16),
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    eventController.leaveEvent(event.id);
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: const Color(0xFF007BFF),
+                                    foregroundColor: Colors.white,
+                                    minimumSize: Size(270, 48),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                  child: const Text(
+                                    'Leave the event ',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              )
                             ],
                           ),
                         ),

@@ -65,8 +65,9 @@ class AuthService {
   }
 
   //Sign out function
-  Future<void> signOut() async {
+  Future<void> signOut(BuildContext context) async {
     await supaBase.auth.signOut();
+    Navigator.pushReplacementNamed(context, '/auth_gate');
   }
 
   Future<void> resetPassword(String email) async {

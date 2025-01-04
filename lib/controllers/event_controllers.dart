@@ -117,4 +117,32 @@ class EventControllers {
       print('Error participating in event: $e');
     }
   }
+
+  void leaveEvent(
+    int eventId,
+  ) async {
+    try {
+      final userId = await authService.getLoggedInUser();
+      if (userId == null) {
+        debugPrint('User not logged in');
+        return;
+      }
+      final response = await supabase
+          .from('partcipants')
+          .delete()
+          .eq(
+            'user_id',
+            userId,
+          )
+          .eq('event_id', eventId);
+      debugPrint('Response: ${response.data}');
+      if (response.error == null) {
+        debugPrint('Successfully left the event');
+      } else {
+        debugPrint('Error deleting from participants table: ${response.error.message}');
+      }
+    } catch (e) {
+      debugPrint('Error leaving event: $e');
+    }
+  }
 }
