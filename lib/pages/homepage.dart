@@ -4,6 +4,8 @@ import 'package:pt_events_app/auth/aut_gate.dart';
 import 'package:pt_events_app/controllers/event_controllers.dart';
 import 'package:supabase/supabase.dart';
 import '../routes/routes.dart';
+import '../models/event_model.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 class Homepage extends StatefulWidget {
   Homepage({super.key});
@@ -30,7 +32,6 @@ class _HomepageState extends State<Homepage> {
     });
   }
 
-  void testy() {}
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +74,10 @@ class _HomepageState extends State<Homepage> {
                 SizedBox(height: 20),
                 Row(
                   // Here comes the list of events that are signed up by the user
-                  children: [],
+                  children: [
+
+
+                  ],
                 ),
                 TextButton(
                     onPressed: () {
