@@ -30,7 +30,6 @@ class _LoginState extends State<Login> {
   Future<void> checkUser(BuildContext context, String email, String password, GlobalKey<FormState> formKey) async {
     if (formKey.currentState!.validate()) {
       try {
-
         await authService.signInWithEmaiPassword(email, password).then((value) {
           Navigator.pushReplacement(
             context,
@@ -101,10 +100,10 @@ class _LoginState extends State<Login> {
       appBar: AppBar(
         title: Text(
           'Login',
-          style: TextStyle(color: Colors.white),
+          style: Theme.of(context).textTheme.titleMedium,
         ),
         centerTitle: true,
-        backgroundColor: Colors.black,
+        backgroundColor: Theme.of(context).primaryColor,
       ),
       body: Center(
         child: Padding(

@@ -55,7 +55,6 @@ class _SignUpState extends State<SignUp> {
       });
     });
   }
-  
 
   emailListener(TextEditingController emailController, Function(String) checkEmailAvailability) {
     emailController.addListener(() {
@@ -151,10 +150,10 @@ class _SignUpState extends State<SignUp> {
       appBar: AppBar(
         title: Text(
           'Sign Up',
-          style: TextStyle(color: Colors.white),
+          style: Theme.of(context).textTheme.titleMedium,
         ),
         centerTitle: true,
-        backgroundColor: Colors.black,
+        backgroundColor: Theme.of(context).primaryColor,
       ),
       body: Center(
         child: Padding(

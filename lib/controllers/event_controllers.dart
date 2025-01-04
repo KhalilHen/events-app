@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pt_events_app/auth/auth_service.dart';
+import 'package:pt_events_app/main.dart';
 
 import 'package:supabase/supabase.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -39,17 +40,49 @@ class EventControllers {
     }
   }
 
-  Future<void> participateEvent(int eventId) async {
+  Future<List<Event>> retrieveUserEvents() async {
     try {
-      // Retrieve the logged-in user's ID
       final userId = await authService.getLoggedInUser();
-
       if (userId == null) {
         print('User not logged in');
-        return; // Exit the function if the user is not logged in
+        return [];
       }
+      final response = await supabase.from('partcipants').select('event_id').eq('user_id', userId);
 
-      print('User logged in with ID: $userId');
+      if (response == null) {
+        print('Error retrieving user events: $response');
+        return [];
+      }
+      print(response);
+
+      // final eventData =
+      final eventData = await supabase.from('events').select().eq('id', response); //this should retrieve the events  rows which match  the event_id in the participants table
+      // final data = response as List<dynamic>;
+
+      print(eventData);
+      return eventData as List<Event>;
+
+      // return data.map((e) => Event.fromMap(e as Map<String, dynamic>)).toList();
+
+      // return response as List<Event>;
+    } catch (e) {
+      print('Error retrieving user events: $e');
+      return [];
+    }
+  }
+
+  Future<void> participateEvent(
+    int eventId,
+  ) async {
+    try {
+      final userId = await authService.getLoggedInUser();
+
+      // Retrieve the logged-in user's ID
+      // final userId = await authService.getLoggedInUser();
+      if (userId == null || userId.isEmpty) {
+        print('User not logged in');
+        return;
+      }
 
       // Insert the user_id and event_id into the participants table
       final response = await supabase.from('partcipants').insert({
@@ -64,6 +97,12 @@ class EventControllers {
         print('Error inserting into participants table: ${response.error.message}');
       }
     } catch (e) {
+      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      //   content: Text('Error participating in event: $e'),
+      // ));
+      scaffoldMessengerKey.currentState?.showSnackBar(
+        SnackBar(content: Text('Error participating in event: $e')),
+      );
       print('Error participating in event: $e');
     }
   }

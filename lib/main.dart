@@ -11,10 +11,12 @@ import 'package:pt_events_app/routes/routes.dart';
 // import 'package:pt_events_app/pages/homepage.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-
+  
 
   runApp(MyApp());
 }
@@ -45,8 +47,8 @@ class MyApp extends StatelessWidget {
       // initialRoute: appRoutes.authGate(),
 
       // home: const SignUp(),
-      // home: const AuthGate(),
-      home: EventPage(), //Temporarily while working on the  events page
+      home: const AuthGate(),
+      // home: EventPage(), //Temporarily while working on the  events page
       routes: {
         AppRoutes.authGate: (context) => const AuthGate(),
         AppRoutes.login: (context) => const Login(),

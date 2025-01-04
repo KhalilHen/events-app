@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pt_events_app/auth/auth_service.dart';
 import 'package:pt_events_app/auth/aut_gate.dart';
+import 'package:pt_events_app/controllers/event_controllers.dart';
 import 'package:supabase/supabase.dart';
 import '../routes/routes.dart';
 
@@ -14,6 +15,7 @@ class Homepage extends StatefulWidget {
 class _HomepageState extends State<Homepage> {
   final authService = AuthService();
   String? username;
+  final eventController = EventControllers();
 
   @override
   void initState() {
@@ -75,7 +77,9 @@ class _HomepageState extends State<Homepage> {
                 ),
                 TextButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, '/events');
+                      // Navigator.pushNamed(context, '/events');
+
+                      eventController.retrieveUserEvents(); //too test the function
                     },
                     child: Text('View Events')),
                 // Remove the repeated TextButton widgets
