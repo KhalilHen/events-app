@@ -46,7 +46,6 @@ class _EventState extends State<EventPage> {
         // padding: const EdgeInsets.all(8.0),
         padding: EdgeInsets.only(top: 30),
         child: FutureBuilder<List<Event>>(
-       
             future: eventControllers.retrieveEvents(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
@@ -115,6 +114,31 @@ class _EventState extends State<EventPage> {
                                           fit: BoxFit.cover,
                                           width: double.infinity,
                                           height: 150,
+                                        ),
+                                      ),
+                                    ),
+                                    Positioned(
+                                      top: 12,
+                                      right: 12,
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.circular(20),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.black.withOpacity(0.1),
+                                              blurRadius: 4,
+                                            ),
+                                          ],
+                                        ),
+                                        child: Text(
+                                          DateTime.now().isBefore(event.startDate) ? 'Upcoming' : 'Past',
+                                          style: TextStyle(
+                                            color: const Color(0xFF007BFF),
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
                                       ),
                                     ),
