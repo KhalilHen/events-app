@@ -20,6 +20,8 @@ class _LoginState extends State<Login> {
   final formKey = GlobalKey<FormState>();
   final supabase = Supabase.instance.client;
   final authService = AuthService();
+  bool passwordVisible = false;
+
   @override
   void dispose() {
     emailController.dispose();
@@ -138,12 +140,16 @@ class _LoginState extends State<Login> {
                 SizedBox(height: 20),
                 TextFormField(
                   controller: passwordController,
+
                   decoration: InputDecoration(
+                    suffixIcon: IconButton(onPressed: () => setState(() => passwordVisible = !passwordVisible), icon: Icon(passwordVisible ? Icons.visibility : Icons.visibility_off)),
                     labelText: 'Password',
                     hintText: 'Enter your password',
                     border: OutlineInputBorder(),
                   ),
-                  obscureText: true,
+                  obscureText: !passwordVisible,
+
+                  // obscureText: true,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your password';
