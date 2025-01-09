@@ -65,8 +65,7 @@ class _HomepageState extends State<Homepage> {
               style: Theme.of(context).textTheme.titleMedium,
             ),
             SizedBox(height: 16),
-            SizedBox(
-              height: 400, // Fixed height for the horizontal scroll section
+            Expanded(
               child: FutureBuilder<List<Event>>(
                 future: eventController.retrieveUserEvents(),
                 builder: (context, snapshot) {
@@ -215,6 +214,7 @@ class _HomepageState extends State<Homepage> {
       // ),
 
       bottomNavigationBar: BottomNavigationBar(
+          currentIndex: currentIndex,
           onTap: (index) {
             setState(() {
               currentIndex = index;

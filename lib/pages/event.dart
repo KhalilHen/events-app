@@ -410,13 +410,14 @@ class _EventState extends State<EventPage> {
       // ),
 
       bottomNavigationBar: BottomNavigationBar(
+          currentIndex: currentIndex,
           onTap: (index) {
             setState(() {
               currentIndex = index;
             });
             switch (index) {
               case 0:
-                Navigator.pushReplacementNamed(context, '/home');
+                Navigator.pushReplacementNamed(context, '/homepage');
                 break;
               case 1:
                 Navigator.pushReplacementNamed(context, '/event');
