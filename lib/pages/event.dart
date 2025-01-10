@@ -130,15 +130,25 @@ class _EventState extends State<EventPage> {
                                             ),
                                           ],
                                         ),
-                                        child: Text(
-                                          DateTime.now().isBefore(event.startDate) ? 'Upcoming' : 'Past',
-                                          style: TextStyle(
-                                            color: const Color(0xFF007BFF),
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
+
+                                        child: customText(event.startDate, event.endDate),
+
+                                        // Custom text widget
                                       ),
+                                      //   child: Text(
+                                      //     // DateTime.now().isBefore(event.startDate)
+                                      //     //     ? 'Upcoming'
+                                      //     //     : DateTime.now().isAfter(event.endDate)
+                                      //     //         ? 'Past'
+                                      //     //         : 'Ongoing',
+
+                                      //     style: TextStyle(
+                                      //       color: const Color(0xFF007BFF),
+                                      //       fontSize: 12,
+                                      //       fontWeight: FontWeight.bold,
+                                      //     ),
+                                      //   ),
+                                      // ),
                                     ),
                                   ],
                                 ),
@@ -457,6 +467,25 @@ class _EventState extends State<EventPage> {
                 ),
                 label: 'Profile'),
           ]),
+    );
+  }
+
+  Widget customText(DateTime startDate, DateTime endDate) {
+    String status;
+    if (DateTime.now().isBefore(startDate)) {
+      status = 'Upcoming';
+    } else if (DateTime.now().isAfter(endDate)) {
+      status = 'Past';
+    } else {
+      status = 'Ongoing';
+    }
+    return Text(
+      status,
+      style: TextStyle(
+        color: const Color(0xFF007BFF),
+        fontSize: 12,
+        fontWeight: FontWeight.bold,
+      ),
     );
   }
 }
