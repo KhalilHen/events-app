@@ -24,8 +24,8 @@ class ExpandedCardView extends StatelessWidget {
                   //Doesn't appear
                   icon: Icon(Icons.close),
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.white),
-                    shape: MaterialStateProperty.all(CircleBorder()),
+                    backgroundColor: WidgetStatePropertyAll(Colors.white),
+                    shape: WidgetStatePropertyAll(CircleBorder()),
                   ),
                   onPressed: () {
                     // Navigator.of(context).pop();
@@ -48,7 +48,7 @@ class ExpandedCardView extends StatelessWidget {
                         Stack(
                           children: [
                             ClipRRect(
-                              borderRadius: BorderRadius.only(
+                              borderRadius: const BorderRadius.only(
                                 bottomLeft: Radius.circular(15),
                                 bottomRight: Radius.circular(15),
                               ),
@@ -69,10 +69,24 @@ class ExpandedCardView extends StatelessWidget {
                               child: Container(
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color: Colors.white.withOpacity(0.9),
+                                  gradient: LinearGradient(
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                    colors: [
+                                      Colors.white.withAlpha(230),
+                                      Colors.white.withAlpha(179),
+                                    ],
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withAlpha(51),
+                                      blurRadius: 4,
+                                      offset: Offset(0, 2),
+                                    ),
+                                  ],
                                 ),
                                 child: IconButton(
-                                  icon: Icon(Icons.arrow_back, color: Colors.black),
+                                  icon: Icon(Icons.arrow_back, color: Colors.black87),
                                   onPressed: () {
                                     Navigator.of(context).pop();
                                   },
@@ -91,17 +105,57 @@ class ExpandedCardView extends StatelessWidget {
                                     end: Alignment.bottomCenter,
                                     colors: [
                                       Colors.transparent,
-                                      Colors.black.withOpacity(0.7),
+                                      Colors.black.withAlpha(51),
+                                      Colors.black.withAlpha(153),
+                                      Colors.black.withAlpha(204),
                                     ],
                                   ),
                                 ),
-                                child: Text(
-                                  event.title,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                child: Stack(
+                                  children: [
+                                    Text(
+                                      event.title,
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.bold,
+                                        shadows: [
+                                          Shadow(
+                                            offset: Offset(0.5, 0.5),
+                                            blurRadius: 3.0,
+                                            color: Colors.black.withAlpha(128),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    // Main text with outline
+                                    Text(
+                                      event.title,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.bold,
+                                        shadows: [
+                                          Shadow(
+                                            offset: Offset(-1, -1),
+                                            color: Colors.black.withAlpha(77),
+                                          ),
+                                          Shadow(
+                                            offset: Offset(1, -1),
+                                            color: Colors.black.withAlpha(77),
+                                          ),
+                                          Shadow(
+                                            offset: Offset(-1, 1),
+                                            color: Colors.black.withAlpha(77),
+                                          ),
+                                          Shadow(
+                                            offset: Offset(1, 1),
+                                            color: Colors.black.withAlpha(77),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
@@ -111,10 +165,7 @@ class ExpandedCardView extends StatelessWidget {
                         // Column(
                         //   children: [],
                         // ),
-                        Text(
-                          event.title,
-                          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                        ),
+
                         Row(
                           // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [

@@ -150,4 +150,6 @@ class EventControllers {
       debugPrint('Error leaving event: $e');
     }
   }
+
+ 
 }
