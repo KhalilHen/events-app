@@ -45,22 +45,69 @@ class ExpandedCardView extends StatelessWidget {
                       children: [
                         // Stack(
                         // children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(15),
-                            bottomRight: Radius.circular(15),
-                          ),
-                          child: Image.network(
-                            // event.imageUrl,
-                            'https://t3.ftcdn.net/jpg/00/72/98/56/360_F_72985661_LU1Xk0YQiPBwOuesuuJgwTn0NPlwP8ob.jpg',
+                        Stack(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(15),
+                                bottomRight: Radius.circular(15),
+                              ),
+                              child: Image.network(
+                                // event.imageUrl,
+                                'https://t3.ftcdn.net/jpg/00/72/98/56/360_F_72985661_LU1Xk0YQiPBwOuesuuJgwTn0NPlwP8ob.jpg',
 
-                            fit: BoxFit.cover,
-                            // fit: BoxFit.fill,
-                            // fit: BoxFit.contain,
-                            width: double.infinity,
-                            height: 350,
-                          ),
+                                fit: BoxFit.cover,
+                                // fit: BoxFit.fill,
+                                // fit: BoxFit.contain,
+                                width: double.infinity,
+                                height: 350,
+                              ),
+                            ),
+                            Positioned(
+                              top: 40,
+                              left: 16,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.white.withOpacity(0.9),
+                                ),
+                                child: IconButton(
+                                  icon: Icon(Icons.arrow_back, color: Colors.black),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              bottom: 0,
+                              left: 0,
+                              right: 0,
+                              child: Container(
+                                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
+                                    colors: [
+                                      Colors.transparent,
+                                      Colors.black.withOpacity(0.7),
+                                    ],
+                                  ),
+                                ),
+                                child: Text(
+                                  event.title,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
+
                         // Column(
                         //   children: [],
                         // ),
