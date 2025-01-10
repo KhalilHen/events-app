@@ -65,7 +65,8 @@ class _HomepageState extends State<Homepage> {
               style: Theme.of(context).textTheme.titleMedium,
             ),
             SizedBox(height: 16),
-            Expanded(
+            SizedBox(
+              height: 360,
               child: FutureBuilder<List<Event>>(
                 future: eventController.retrieveUserEvents(),
                 builder: (context, snapshot) {
