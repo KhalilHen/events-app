@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pt_events_app/custom_widgets/event_action_button.dart';
 import 'package:pt_events_app/pages/event.dart';
 import '../models/event_model.dart';
 import 'package:intl/intl.dart';
@@ -111,49 +112,59 @@ class ExpandedCardView extends StatelessWidget {
                                     ],
                                   ),
                                 ),
-                                child: Stack(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      event.title,
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.bold,
-                                        shadows: [
-                                          Shadow(
-                                            offset: Offset(0.5, 0.5),
-                                            blurRadius: 3.0,
-                                            color: Colors.black.withAlpha(128),
-                                          ),
-                                        ],
+                                    // Event Category
+                                    Container(
+                                      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                                      decoration: BoxDecoration(
+                                        color: Theme.of(context).primaryColor.withOpacity(0.9),
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      child: Text(
+                                        'General',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,
+                                        ),
                                       ),
                                     ),
-                                    // Main text with outline
-                                    Text(
-                                      event.title,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.bold,
-                                        shadows: [
-                                          Shadow(
-                                            offset: Offset(-1, -1),
-                                            color: Colors.black.withAlpha(77),
+                                    SizedBox(height: 8),
+                                    // Event Title
+                                    Stack(
+                                      children: [
+                                        Text(
+                                          event.title,
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 24,
+                                            fontWeight: FontWeight.bold,
+                                            shadows: [
+                                              Shadow(
+                                                offset: Offset(0.5, 0.5),
+                                                blurRadius: 3.0,
+                                                color: Colors.black.withAlpha(128),
+                                              ),
+                                            ],
                                           ),
-                                          Shadow(
-                                            offset: Offset(1, -1),
-                                            color: Colors.black.withAlpha(77),
+                                        ),
+                                        Text(
+                                          event.title,
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 24,
+                                            fontWeight: FontWeight.bold,
+                                            shadows: [
+                                              Shadow(offset: Offset(-1, -1), color: Colors.black.withAlpha(77)),
+                                              Shadow(offset: Offset(1, -1), color: Colors.black.withAlpha(77)),
+                                              Shadow(offset: Offset(-1, 1), color: Colors.black.withAlpha(77)),
+                                              Shadow(offset: Offset(1, 1), color: Colors.black.withAlpha(77)),
+                                            ],
                                           ),
-                                          Shadow(
-                                            offset: Offset(-1, 1),
-                                            color: Colors.black.withAlpha(77),
-                                          ),
-                                          Shadow(
-                                            offset: Offset(1, 1),
-                                            color: Colors.black.withAlpha(77),
-                                          ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),
@@ -161,6 +172,73 @@ class ExpandedCardView extends StatelessWidget {
                             ),
                           ],
                         ),
+
+                        // Positioned(
+                        //   bottom: 0,
+                        //   left: 0,
+                        //   right: 0,
+                        //   child: Container(
+                        //     padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                        //     decoration: BoxDecoration(
+                        //       gradient: LinearGradient(
+                        //         begin: Alignment.topCenter,
+                        //         end: Alignment.bottomCenter,
+                        //         colors: [
+                        //           Colors.transparent,
+                        //           Colors.black.withAlpha(51),
+                        //           Colors.black.withAlpha(153),
+                        //           Colors.black.withAlpha(204),
+                        //         ],
+                        //       ),
+                        //     ),
+                        //     child: Stack(
+                        //       children: [
+                        //         Text(
+                        //           event.title,
+                        //           style: TextStyle(
+                        //             color: Colors.black,
+                        //             fontSize: 24,
+                        //             fontWeight: FontWeight.bold,
+                        //             shadows: [
+                        //               Shadow(
+                        //                 offset: Offset(0.5, 0.5),
+                        //                 blurRadius: 3.0,
+                        //                 color: Colors.black.withAlpha(128),
+                        //               ),
+                        //             ],
+                        //           ),
+                        //         ),
+                        //         // Main text with outline
+                        //         Text(
+                        //           event.title,
+                        //           style: TextStyle(
+                        //             color: Colors.white,
+                        //             fontSize: 24,
+                        //             fontWeight: FontWeight.bold,
+                        //             shadows: [
+                        //               Shadow(
+                        //                 offset: Offset(-1, -1),
+                        //                 color: Colors.black.withAlpha(77),
+                        //               ),
+                        //               Shadow(
+                        //                 offset: Offset(1, -1),
+                        //                 color: Colors.black.withAlpha(77),
+                        //               ),
+                        //               Shadow(
+                        //                 offset: Offset(-1, 1),
+                        //                 color: Colors.black.withAlpha(77),
+                        //               ),
+                        //               Shadow(
+                        //                 offset: Offset(1, 1),
+                        //                 color: Colors.black.withAlpha(77),
+                        //               ),
+                        //             ],
+                        //           ),
+                        //         ),
+                        //       ],
+                        //     ),
+                        //   ),
+                        // ),
 
                         // Column(
                         //   children: [],
@@ -263,6 +341,8 @@ class ExpandedCardView extends StatelessWidget {
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                 ),
+
+                                // style: Theme.of(context).textTheme.titleMedium,
                               ),
                               SizedBox(height: 10),
                               Text(
@@ -273,45 +353,6 @@ class ExpandedCardView extends StatelessWidget {
                           ),
                         ),
 
-                        // Button containers
-
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            ElevatedButton(
-                              onPressed: () {
-                                // Add your onPressed code here!
-                              },
-                              style: ElevatedButton.styleFrom(
-                                foregroundColor: Colors.blue,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(18.0),
-                                ),
-                                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                              ),
-                              child: Text(
-                                'Join Event',
-                                style: TextStyle(fontSize: 16),
-                              ),
-                            ),
-                            // ElevatedButton(
-                            //   onPressed: () {
-                            //     // Add your onPressed code here!
-                            //   },
-                            //   style: ElevatedButton.styleFrom(
-                            //     primary: Colors.red,
-                            //     shape: RoundedRectangleBorder(
-                            //       borderRadius: BorderRadius.circular(18.0),
-                            //     ),
-                            //     padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                            //   ),
-                            //   child: Text(
-                            //     'Cancel',
-                            //     style: TextStyle(fontSize: 16),
-                            //   ),
-                            // ),
-                          ],
-                        ),
                         const Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -321,66 +362,53 @@ class ExpandedCardView extends StatelessWidget {
                             ),
                           ],
                         ),
-                        //Location Container
-                        const Column(
-                          children: [
-                            Row(
-                              children: [
-                                Padding(padding: const EdgeInsets.only(left: 5)),
-                                Icon(
-                                  Icons.location_on,
-                                  size: 15,
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Text('Location:', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Padding(padding: const EdgeInsets.only(left: 5)),
-                                Text(' Amsterdam Centraal', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
-                              ],
-                            ),
 
-                            //TODO Mabye in the future here a Google maps/Apple maps intergration
-                          ],
-                        ),
-                        Padding(padding: const EdgeInsets.only(top: 60)),
                         //Addtional information container
-                        Column(
-                          children: [
-                            Center(
-                              child: Text(
-                                'Additional Information',
-                                style: Theme.of(context).textTheme.titleMedium,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            const Padding(
-                              padding: const EdgeInsets.only(left: 10.0),
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Wrap(
-                                  alignment: WrapAlignment.start,
-                                  spacing: 8.0,
-                                  runSpacing: 4.0,
-                                  children: [
-                                    Text(
-                                      'lorem ipsum dolor sit amet  ',
-                                      softWrap: true,
-                                    ),
-                                  ],
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Additional information ',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
                                 ),
+
+                                // style: Theme.of(context).textTheme.titleMedium,
                               ),
-                            ),
-                          ],
+                              SizedBox(height: 10),
+                              Text(
+                                event.description,
+                                softWrap: true,
+                              ),
+                            ],
+                          ),
                         ),
 
+                        // EventActionButton(eventId: event.id),
+                        // EventActionButton(eventId: event.id),
+                        // Padding(padding: const EdgeInsets.all(10.0)),
                         // ],
+
+                        Center(
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 0.9,
+                            margin: EdgeInsets.symmetric(vertical: 20),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withAlpha(51),
+                                  blurRadius: 4,
+                                  offset: Offset(0, 2),
+                                ),
+                              ],
+                            ),
+                            child: EventActionButton(eventId: event.id),
+                          ),
+                        )
                       ],
                     ),
                   ),

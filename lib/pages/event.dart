@@ -220,7 +220,9 @@ class _EventState extends State<EventPage> {
                                       SizedBox(height: 15),
 
                                       //Actions buttons
+                                      // EventActionButton(event: event, eventId: event.id),
                                       EventActionButton(eventId: event.id),
+
                                       // Padding(
                                       //   padding: EdgeInsets.all(2),
                                       //   child: ElevatedButton(
