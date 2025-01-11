@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pt_events_app/custom_widgets/event_action_button.dart';
 import 'package:pt_events_app/pages/card_view.dart';
 
 import 'package:supabase/supabase.dart';
@@ -219,32 +220,32 @@ class _EventState extends State<EventPage> {
                                       SizedBox(height: 15),
 
                                       //Actions buttons
+                                      EventActionButton(eventId: event.id),
+                                      // Padding(
+                                      //   padding: EdgeInsets.all(2),
+                                      //   child: ElevatedButton(
+                                      //     onPressed: () {
+                                      //       eventControllers.participateEvent(event.id);
+                                      //     },
+                                      //     style: ElevatedButton.styleFrom(
+                                      //       backgroundColor: const Color(0xFF007BFF),
+                                      //       foregroundColor: Colors.white,
+                                      //       minimumSize: const Size(270, 48),
+                                      //       shape: RoundedRectangleBorder(
+                                      //         borderRadius: BorderRadius.circular(8),
+                                      //       ),
+                                      //     ),
+                                      //     child: Text(
+                                      //       // 'Register ',
+                                      //       eventControllers.isRegistered(event.id) ? 'Leave Event' : 'Register',
 
-                                      Padding(
-                                        padding: EdgeInsets.all(2),
-                                        child: ElevatedButton(
-                                          onPressed: () {
-                                            eventControllers.participateEvent(event.id);
-                                          },
-                                          style: ElevatedButton.styleFrom(
-                                            backgroundColor: const Color(0xFF007BFF),
-                                            foregroundColor: Colors.white,
-                                            minimumSize: const Size(270, 48),
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(8),
-                                            ),
-                                          ),
-                                          child: Text(
-                                            // 'Register ',
-                                            eventControllers.isRegistered(event.id) ? 'Leave Event' : 'Register',
-
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
+                                      //       style: TextStyle(
+                                      //         fontSize: 16,
+                                      //         fontWeight: FontWeight.bold,
+                                      //       ),
+                                      //     ),
+                                      //   ),
+                                      // ),
                                       // Image.network(' ')
                                     ],
                                   ),
