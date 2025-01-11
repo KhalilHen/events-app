@@ -161,13 +161,15 @@ class _EventState extends State<EventPage> {
                                       //Title container
                                       Row(
                                         children: [
-                                          Text(
-                                            // event['title'] ?? 'No Title',
+                                          Flexible(
+                                            child: Text(
+                                              // event['title'] ?? 'No Title',
 
-                                            event.title, // Access title from the Event object
-
-                                            // 'Event Title',
-                                            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                                              event.title, // Access title from the Event object
+                                              // 'Event Title',
+                                              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
                                           ),
                                         ],
                                       ),
