@@ -118,7 +118,7 @@ class EventControllers {
     }
   }
 
-  void leaveEvent(
+   leaveEvent(
     int eventId,
   ) async {
     try {
@@ -149,5 +149,22 @@ class EventControllers {
     } catch (e) {
       debugPrint('Error leaving event: $e');
     }
+  }
+
+  isRegistered(int eventId) async {
+    final userId = await authService.getLoggedInUser();
+    if (userId == null) {
+      print('User not logged in');
+      return false;
+    }
+
+    final response = await supabase.from('partcipants').select().eq('user_id', userId).eq('event_id', eventId);
+
+    if (response.isEmpty) {
+      print('Error checking if user is registered: $response');
+      return false;
+    }
+
+    return true;
   }
 }

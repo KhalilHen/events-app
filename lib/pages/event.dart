@@ -234,8 +234,10 @@ class _EventState extends State<EventPage> {
                                               borderRadius: BorderRadius.circular(8),
                                             ),
                                           ),
-                                          child: const Text(
-                                            'Register ',
+                                          child: Text(
+                                            // 'Register ',
+                                            eventControllers.isRegistered(event.id) ? 'Leave Event' : 'Register',
+
                                             style: TextStyle(
                                               fontSize: 16,
                                               fontWeight: FontWeight.bold,
