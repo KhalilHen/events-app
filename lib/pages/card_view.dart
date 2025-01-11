@@ -170,10 +170,12 @@ class ExpandedCardView extends StatelessWidget {
                         Container(
                           padding: EdgeInsets.all(20),
                           child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Container(
                                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                                margin: EdgeInsets.only(bottom: 10),
                                 decoration: BoxDecoration(
                                   color: Colors.grey.withOpacity(0.1),
                                   borderRadius: BorderRadius.circular(12),
@@ -189,64 +191,64 @@ class ExpandedCardView extends StatelessWidget {
                                     ),
                                     Expanded(
                                         child: Text(
-                                      'Date: ${DateFormat('dd-MM-yyyy').format(event.startDate)} - ${DateFormat('dd-MM-yyyy').format(event.endDate)}',
+                                      event.startDate != null ? ' ${DateFormat('dd-MM-yyyy').format(event.startDate)}  ${DateFormat('dd-MM-yyyy').format(event.endDate)} ' : 'No date available',
                                       style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                                     )),
                                   ],
                                 ),
-                              )
+                              ),
+                              Container(
+                                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                                margin: EdgeInsets.only(bottom: 10),
+                                decoration: BoxDecoration(
+                                  color: Colors.grey.withOpacity(0.1),
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.schedule,
+                                      size: 24,
+                                    ),
+                                    SizedBox(
+                                      width: 12,
+                                    ),
+                                    Expanded(
+                                        child: Text(
+                                      event.time,
+                                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                    )),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                                margin: EdgeInsets.only(bottom: 10),
+                                decoration: BoxDecoration(
+                                  color: Colors.grey.withOpacity(0.1),
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.location_on,
+                                      size: 24,
+                                    ),
+                                    SizedBox(
+                                      width: 12,
+                                    ),
+                                    Expanded(
+                                        child: Text(
+                                      event.location,
+                                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                    )),
+                                  ],
+                                ),
+                              ),
                             ],
                           ),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            // Padding(padding: const EdgeInsets.only(left: 5)),
-                            //Row container for date,  time
-                            Icon(
-                              Icons.calendar_today,
-                              size: 15,
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              // event.startDate,
-                              DateFormat('dd-MM-yyyy').format(event.startDate),
 
-                              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                            ),
-
-                            Icon(
-                              Icons.minimize,
-                              size: 15,
-                            ),
-                            // Text(
-                            //   ' - ',
-                            //   style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
-                            //   // DateForm(event.startDate)
-                            // ),
-                            Text(
-                              DateFormat('dd-MM-yyyy').format(event.endDate),
-
-                              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                              // DateForm(event.startDate)
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Padding(padding: const EdgeInsets.only(left: 5)),
-                            Icon(
-                              Icons.access_time,
-                              size: 15,
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Text('16:00 - 18:00', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
-                          ],
-                        ),
                         //Description Container
 
                         // Padding(padding: const EdgeInsets.all(10.0)),
