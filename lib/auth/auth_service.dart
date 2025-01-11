@@ -29,13 +29,13 @@ class AuthService {
 //Sing up fuction
   Future<AuthResponse?> signUpWithEmaiPassword(String email, String password, String username) async {
     try {
-      final role1 = 'admin';
+      // final role1 = 'admin';
       final response = await supaBase.auth.signUp(
         email: email,
         password: password,
         data: {
           'displayName': username,
-          'role': role1, //Added to make 1 admin user
+          // 'role': role1, //Added to make 1 admin user
         },
       );
 

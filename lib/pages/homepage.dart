@@ -117,6 +117,7 @@ class _HomepageState extends State<Homepage> {
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
                                       ),
+                                      overflow: TextOverflow.ellipsis,
                                     ),
                                     SizedBox(height: 12),
                                     Row(

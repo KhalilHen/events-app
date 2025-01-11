@@ -220,22 +220,28 @@ class _EventState extends State<EventPage> {
 
                                       //Actions buttons
 
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          ElevatedButton(
-                                            // onPressed: eventControllers.partcipateEvent,
-                                            onPressed: () {
-                                              eventControllers.participateEvent(event.id); //Pass the event id to the function
-                                              // eventControllers.participateEvent(event.id.toString()); //Pass the event id to the function
-                                              // print(event.id.toString());
-                                            },
-
-                                            child: Text('Register'),
+                                      Padding(
+                                        padding: EdgeInsets.all(2),
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            eventControllers.participateEvent(event.id);
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: const Color(0xFF007BFF),
+                                            foregroundColor: Colors.white,
+                                            minimumSize: const Size(270, 48),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(8),
+                                            ),
                                           ),
-                                          ElevatedButton(onPressed: null, child: Text('More info') //Or Contact not sure yet,
-                                              ),
-                                        ],
+                                          child: const Text(
+                                            'Register ',
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
                                       ),
                                       // Image.network(' ')
                                     ],
