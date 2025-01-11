@@ -165,11 +165,43 @@ class ExpandedCardView extends StatelessWidget {
                         // Column(
                         //   children: [],
                         // ),
+                        Padding(padding: const EdgeInsets.only(top: 10)),
 
+                        Container(
+                          padding: EdgeInsets.all(20),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                                decoration: BoxDecoration(
+                                  color: Colors.grey.withOpacity(0.1),
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.calendar_month_outlined,
+                                      size: 24,
+                                    ),
+                                    SizedBox(
+                                      width: 12,
+                                    ),
+                                    Expanded(
+                                        child: Text(
+                                      'Date: ${DateFormat('dd-MM-yyyy').format(event.startDate)} - ${DateFormat('dd-MM-yyyy').format(event.endDate)}',
+                                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                    )),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
                         Row(
-                          // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Padding(padding: const EdgeInsets.only(left: 5)),
+                            // Padding(padding: const EdgeInsets.only(left: 5)),
                             //Row container for date,  time
                             Icon(
                               Icons.calendar_today,
