@@ -117,15 +117,24 @@ class ExpandedCardView extends StatelessWidget {
                                   children: [
                                     // Event Category
                                     Container(
-                                      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                                      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                                       decoration: BoxDecoration(
-                                        color: Theme.of(context).primaryColor.withOpacity(0.9),
+                                        // color: Theme.of(context).primaryColor.withOpacity(0.9),
+                                        color: Colors.white,
+
                                         borderRadius: BorderRadius.circular(20),
+
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.black.withOpacity(0.1),
+                                            blurRadius: 4,
+                                          ),
+                                        ],
                                       ),
                                       child: Text(
-                                        'General',
+                                        event.category ?? 'General',
                                         style: TextStyle(
-                                          color: Colors.white,
+                                          color: const Color(0xFF007BFF),
                                           fontSize: 14,
                                           fontWeight: FontWeight.w500,
                                         ),
@@ -261,6 +270,7 @@ class ExpandedCardView extends StatelessWidget {
                                 child: Row(
                                   children: [
                                     Icon(
+                                      color: Colors.blueAccent,
                                       Icons.calendar_month_outlined,
                                       size: 24,
                                     ),
@@ -285,6 +295,7 @@ class ExpandedCardView extends StatelessWidget {
                                 child: Row(
                                   children: [
                                     Icon(
+                                      color: Colors.blueAccent,
                                       Icons.schedule,
                                       size: 24,
                                     ),
@@ -304,11 +315,14 @@ class ExpandedCardView extends StatelessWidget {
                                 margin: EdgeInsets.only(bottom: 10),
                                 decoration: BoxDecoration(
                                   color: Colors.grey.withOpacity(0.1),
+                                  // color: Colors.blue[700],
+
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                                 child: Row(
                                   children: [
                                     Icon(
+                                      color: Colors.blueAccent,
                                       Icons.location_on,
                                       size: 24,
                                     ),
