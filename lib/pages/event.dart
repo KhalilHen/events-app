@@ -119,11 +119,21 @@ class _EventState extends State<EventPage> {
                                       borderRadius: BorderRadius.circular(20.0), // think this makes it more beautifull
 
                                       child: InkWell(
-                                        child: Image.network(
-                                          'https://t3.ftcdn.net/jpg/00/72/98/56/360_F_72985661_LU1Xk0YQiPBwOuesuuJgwTn0NPlwP8ob.jpg',
-                                          fit: BoxFit.cover,
-                                          width: double.infinity,
-                                          height: 150,
+                                        // child: Image.network(
+                                        //   'https://t3.ftcdn.net/jpg/00/72/98/56/360_F_72985661_LU1Xk0YQiPBwOuesuuJgwTn0NPlwP8ob.jpg',
+                                        //   fit: BoxFit.cover,
+                                        //   width: double.infinity,
+                                        //   height: 150,
+                                        // ),
+                                        child: Image.network( 
+      (event.image != null && event.image!.isNotEmpty) 
+
+                                      ? event.image!
+
+                                      : 'https://t3.ftcdn.net/jpg/00/72/98/56/360_F_72985661_LU1Xk0YQiPBwOuesuuJgwTn0NPlwP8ob.jpg',
+                                      fit: BoxFit.cover,
+                                      width: double.infinity,
+                                      height: 150,
                                         ),
                                       ),
                                     ),

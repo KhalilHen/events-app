@@ -10,9 +10,13 @@ class Event {
   final String time;
   final String location;
   final String? category;
+  final String? image;
   // final String image;
 
-  Event({required this.id, required this.title, required this.description, required this.startDate, required this.endDate, required this.time, required this.location, required this.category
+  Event({
+    required this.id, required this.title, required this.description, required this.startDate,
+     required this.endDate, required this.time, required this.location, required this.category,
+     required this.image
       // required this.image
       });
 
@@ -28,7 +32,9 @@ class Event {
         time: data['time'],
         endDate: DateTime.parse(data['end_date']),
         location: data['location'],
-        category: data['category']
+        category: data['category'],
+        image: data['image_url']
+        
         // image: data['image']
         );
   }
