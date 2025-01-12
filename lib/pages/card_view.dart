@@ -53,9 +53,21 @@ class ExpandedCardView extends StatelessWidget {
                                 bottomLeft: Radius.circular(15),
                                 bottomRight: Radius.circular(15),
                               ),
-                              child: Image.network(
-                                // event.imageUrl,
-                                'https://t3.ftcdn.net/jpg/00/72/98/56/360_F_72985661_LU1Xk0YQiPBwOuesuuJgwTn0NPlwP8ob.jpg',
+                              child:
+                              event.image == null
+                                  ? Container(
+
+      height: 200,
+      width: double.infinity,
+                                color: const Color(0xFF007BFF).withOpacity(0.1),
+                                child: Icon(Icons.event, size: 50, color: const Color(0xFF007BFF),),
+
+    )
+                                  :
+                              
+                               Image.network(
+                                event.image!, 
+                                // 'https://t3.ftcdn.net/jpg/00/72/98/56/360_F_72985661_LU1Xk0YQiPBwOuesuuJgwTn0NPlwP8ob.jpg',
 
                                 fit: BoxFit.cover,
                                 // fit: BoxFit.fill,
