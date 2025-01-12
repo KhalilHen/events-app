@@ -12,13 +12,15 @@ class Event {
   final String? category;
   final String? image;
   final String? status;
+  // final bool? highlighted;
   // final String image;
 
   Event({
     required this.id, required this.title, required this.description, required this.startDate,
      required this.endDate, required this.time, required this.location, required this.category,
       this.image, 
-        this.status
+        this.status,
+        // required this.highlighted
       // required this.image
       });
 
@@ -36,7 +38,8 @@ class Event {
         location: data['location'],
         category: data['category'],
         image: data['image_url'],
-        status: data['status']
+        status: data['status'],
+        // highlighted: data['high_light'],
         
         // image: data['image']
         );

@@ -37,14 +37,12 @@ class _HomepageState extends State<Homepage> {
       appBar: AppBar(
         title: Text(
           'Homepage',
-           style: TextStyle(color: Colors.white),
+           style: TextStyle(color: Colors.white)
         ),
         backgroundColor: Theme.of(context).primaryColor,
         centerTitle: true,
         actions: [
           IconButton(
-                        color: Colors.white,
-
                         tooltip: 'Logout',
 
               onPressed: () {
@@ -70,7 +68,7 @@ class _HomepageState extends State<Homepage> {
             ),
             SizedBox(height: 16),
             SizedBox(
-              height: 360,
+              height: 430,
               child: FutureBuilder<List<Event>>(
                 future: eventController.retrieveUserEvents(),
                 builder: (context, snapshot) {
@@ -103,12 +101,15 @@ class _HomepageState extends State<Homepage> {
                                 borderRadius: BorderRadius.vertical(
                                   top: Radius.circular(15),
                                 ),
-                                child: Image.network(
-                                  'https://t3.ftcdn.net/jpg/00/72/98/56/360_F_72985661_LU1Xk0YQiPBwOuesuuJgwTn0NPlwP8ob.jpg',
-                                  height: 150,
-                                  width: double.infinity,
-                                  fit: BoxFit.cover,
-                                ),
+                                child:  
+    event.image != null ? Image.network(event.image!)  :  Container(
+
+      height: 200,
+      width: double.infinity,
+                                color: const Color(0xFF007BFF).withOpacity(0.1),
+                                child: Icon(Icons.event, size: 50, color: const Color(0xFF007BFF),),
+
+    ), 
                               ),
                               Padding(
                                 padding: EdgeInsets.all(16),
@@ -183,7 +184,7 @@ class _HomepageState extends State<Homepage> {
                                     ),
                                   ),
                                 ),
-                              )
+                              ), 
                             ],
                           ),
                         ),
@@ -193,10 +194,11 @@ class _HomepageState extends State<Homepage> {
                 },
               ),
             ),
+
           ],
         ),
-      ),
 
+      ),
       // child: Padding(
       //   padding: const EdgeInsets.only(top: 50.0),
       //   child: Column(

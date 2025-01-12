@@ -130,7 +130,12 @@ class _EventState extends State<EventPage> {
                                    ClipRRect(
   borderRadius: BorderRadius.circular(20.0), // For rounded corners
   child: InkWell(
-    child:  event.image != null ? Image.network(event.image!)  :  Container(
+
+
+
+    
+    child:  
+    event.image != null ? Image.network(event.image!)  :  Container(
 
       height: 200,
       width: double.infinity,

@@ -10,35 +10,43 @@ class EventControllers {
   final supabase = Supabase.instance.client;
   // final SupabaseClient supaBase = Supabase.instance.client;
   final authService = AuthService();
-  Future<List<Event>> retrieveEvents() async {
-    try {
-      // final response = await supabase.from('events').select().execute();
-      // final response = await supabase.from('events').select<List<Map<String, dynamic>>>(); //this doesn't work
-      final response = await supabase.from('events').select();
-      // final response = await supabase.from('events').select<List<Map<String, dynamic>>>('*');
+Future<List<Event>> retrieveEvents() async {
+  try {
+    // Fetch highlighted events
+    final highlightedResponse = await supabase
+        .from('events')
+        .select()
+        .eq('high_light', true);
 
-      print(response);
+    // Fetch non-highlighted events
+    final otherResponse = await supabase
+        .from('events')
+        .select()
+        .neq('high_light', true);
 
-      // if (response != null)
-      if (response == null) {
-        print('Error retrieving events: ${response}');
-        return [];
-      }
+    // Combine the responses
+    final response = [...highlightedResponse, ...otherResponse];
 
-      final data = response as List<dynamic>;
-      print('Events retrieved successfully: ${data.length} items');
-
-      print(data);
-      // return data.map((event) => event as Map<String, dynamic>).toList();
-      // return data.map((e) => e.fromMap(e as Map<String, dynamic>)).toList();
-      // return data.map((event) => Event.fromMap(event)).toList();
-
-      return data.map((e) => Event.fromMap(e as Map<String, dynamic>)).toList();
-    } catch (e) {
-      print('Error retrieving events: $e');
+    // If response is null, handle the error case
+    if (response == null) {
+      print('Error retrieving events: response is null');
       return [];
     }
+
+    // Ensure the response is cast to a List
+    final data = response as List<dynamic>;
+
+    print('Events retrieved successfully: ${data.length} items');
+
+    // Map the data to a list of Event objects
+    return data.map((e) => Event.fromMap(e as Map<String, dynamic>)).toList();
+  } catch (e) {
+    // Log and handle any exceptions
+    print('Error retrieving events: $e');
+    return [];
   }
+}
+
 
   Future<List<Event>> retrieveUserEvents() async {
     try {
