@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pt_events_app/auth/auth_service.dart';
 import 'package:pt_events_app/custom_widgets/event_action_button.dart';
 import 'package:pt_events_app/pages/card_view.dart';
 
@@ -27,7 +28,7 @@ class _EventState extends State<EventPage> {
   // late Future<List<Map<String, dynamic>>> retrieveEvents;
   // late Future<List<Event>>? retrieveEvents; // Make it nullable
   late Future<List<Event>> retrieveEvents;
-
+  final authService = AuthService();
   @override
   void initState() {
     super.initState();
@@ -39,9 +40,19 @@ class _EventState extends State<EventPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Events', style: Theme.of(context).textTheme.titleMedium),
+        title: Text('Events', style: TextStyle(color: Colors.white)),
         backgroundColor: Theme.of(context).primaryColor,
         centerTitle: true,
+        actions: [
+          IconButton(
+            tooltip: 'Logout',
+            color: Colors.white,
+            onPressed: () {
+              authService.signOut(context);
+            },
+            icon: Icon(Icons.logout),
+          ),
+        ],
       ),
       body: Padding(
         // padding: const EdgeInsets.all(8.0),

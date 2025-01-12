@@ -150,7 +150,8 @@ class _SignUpState extends State<SignUp> {
       appBar: AppBar(
         title: Text(
           'Sign Up',
-          style: Theme.of(context).textTheme.titleMedium,
+           style: TextStyle(color: Colors.white),
+
         ),
         centerTitle: true,
         backgroundColor: Theme.of(context).primaryColor,

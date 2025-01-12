@@ -35,7 +35,8 @@ class AuthGate extends StatelessWidget {
           });
         } else {
           Future.microtask(() {
-            Navigator.pushReplacementNamed(context, '/login');
+            Navigator.pushReplacementNamed(context, '/login');  
+             //TODO Change this  navigation way addes a arrow to go back to last page which shouldn't happen
           });
         }
         return const Scaffold(

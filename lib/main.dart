@@ -16,7 +16,6 @@ final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey = GlobalKey<Scaffol
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  
 
   runApp(MyApp());
 }
@@ -29,6 +28,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
+
+        appBarTheme: AppBarTheme(
+          iconTheme: IconThemeData(color: Colors.white)
+        ),
         primaryColor: ThemeColors.primaryColor,
         scaffoldBackgroundColor: ThemeColors.background,
         colorScheme: ColorScheme.light(

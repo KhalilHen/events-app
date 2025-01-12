@@ -37,12 +37,16 @@ class _HomepageState extends State<Homepage> {
       appBar: AppBar(
         title: Text(
           'Homepage',
-          style: Theme.of(context).textTheme.titleMedium,
+           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: Theme.of(context).primaryColor,
         centerTitle: true,
         actions: [
           IconButton(
+                        color: Colors.white,
+
+                        tooltip: 'Logout',
+
               onPressed: () {
                 authService.signOut(context);
               },

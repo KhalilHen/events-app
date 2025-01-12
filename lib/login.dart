@@ -102,7 +102,8 @@ class _LoginState extends State<Login> {
       appBar: AppBar(
         title: Text(
           'Login',
-          style: Theme.of(context).textTheme.titleMedium,
+           style: TextStyle(color: Colors.white),
+
         ),
         centerTitle: true,
         backgroundColor: Theme.of(context).primaryColor,
