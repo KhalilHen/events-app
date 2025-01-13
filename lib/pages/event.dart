@@ -500,16 +500,7 @@ class _EventState extends State<EventPage> {
                   icon: Icon(Icons.event),
                 ),
                 label: 'Events'),
-            BottomNavigationBarItem(
-                icon: IconButton(
-                  onPressed: () {
-                    setState(() {
-                      currentIndex = 2;
-                    });
-                  },
-                  icon: Icon(Icons.person),
-                ),
-                label: 'Profile'),
+          
           ]),
     );
   }
