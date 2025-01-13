@@ -1,16 +1,17 @@
 # pt_events_app
 
-A new Flutter project.
+A event/activity app where you can see and join different events. And find all the information about it.
+## How to experience it?
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+You can experience it by cloning it into your favorite IDE and run it on your local machinne. 
+You can also download [here](https://drive.google.com/file/d/1_3QpcuoIrSrIuNAKyqVp8wlotn10tAlk/view?usp=sharing) the APK
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## What can you do with it
+
+ - You can view events, and there information
+ - You can sign-up for the events.
+ - You can sign-in, and register a  account.
+   
