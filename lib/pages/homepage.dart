@@ -241,7 +241,17 @@ class _HomepageState extends State<Homepage> {
                   icon: Icon(Icons.event),
                 ),
                 label: 'Events'),
-            BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: "Account")
+            BottomNavigationBarItem(
+              icon: IconButton(
+                onPressed: () {
+                  setState(() {
+                    currentIndex = 2;
+                  });
+                },
+                icon: Icon(Icons.person_outline),
+              ),
+              label: "Account",
+            )
           ]),
     );
   }

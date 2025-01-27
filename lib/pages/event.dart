@@ -166,14 +166,17 @@ class _EventState extends State<EventPage> {
             );
           }),
       bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
           currentIndex: currentIndex,
+          selectedItemColor: Theme.of(context).primaryColor,
+          unselectedItemColor: Colors.grey,
           onTap: (index) {
             setState(() {
               currentIndex = index;
             });
             switch (index) {
               case 0:
-                Navigator.pushReplacementNamed(context, '/homepage');
+                Navigator.pushReplacementNamed(context, '/home');
                 break;
               case 1:
                 Navigator.pushReplacementNamed(context, '/event');
@@ -205,15 +208,16 @@ class _EventState extends State<EventPage> {
                 ),
                 label: 'Events'),
             BottomNavigationBarItem(
-                icon: IconButton(
-                  onPressed: () {
-                    setState(() {
-                      currentIndex = 2;
-                    });
-                  },
-                  icon: Icon(Icons.person),
-                ),
-                label: 'Profile'),
+              icon: IconButton(
+                onPressed: () {
+                  setState(() {
+                    currentIndex = 2;
+                  });
+                },
+                icon: Icon(Icons.person_outline),
+              ),
+              label: "Account",
+            )
           ]),
     );
   }
