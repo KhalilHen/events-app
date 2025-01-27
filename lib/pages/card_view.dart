@@ -20,10 +20,7 @@ class ExpandedCardView extends StatelessWidget {
               SliverToBoxAdapter(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    eventInfo(context),
-                    eventDescription(),
-                  ],
+                  children: [eventInfo(context), eventDescription(), addtionalInformation(), registerButton(context)],
                 ),
               ),
             ],
@@ -249,6 +246,64 @@ class ExpandedCardView extends StatelessWidget {
             ),
           )
         ],
+      ),
+    );
+  }
+
+  Widget addtionalInformation() {
+    return Container(
+      padding: EdgeInsets.all(20),
+      child: Column(
+        children: [
+          Text(
+            "Additional Informatio ",
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.grey[800],
+            ),
+          ),
+          SizedBox(
+            height: 16,
+          ),
+          Container(
+            padding: EdgeInsets.all(16),
+            decoration: BoxDecoration(
+                color: Colors.grey[100],
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: Colors.grey[200]!,
+                  width: 1,
+                )),
+            child: Text(
+              event.description,
+              style: TextStyle(
+                color: Colors.grey[700],
+                fontSize: 16,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget registerButton(BuildContext context) {
+    return Center(
+      child: Container(
+        width: MediaQuery.of(context).size.width * 0.9,
+        margin: EdgeInsets.symmetric(vertical: 20),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withAlpha(51),
+              blurRadius: 4,
+              offset: Offset(0, 2),
+            ),
+          ],
+        ),
+        child: EventActionButton(eventId: event.id),
       ),
     );
   }
