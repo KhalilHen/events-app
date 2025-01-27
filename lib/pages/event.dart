@@ -125,88 +125,35 @@ class _EventState extends State<EventPage> {
                                   eventCategory(event),
                                 ]),
                               ),
-                              Positioned(
-                                top: 12,
-                                right: 12,
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(20),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.black.withOpacity(0.1),
-                                        blurRadius: 4,
-                                      ),
-                                    ],
-                                  ),
-                                  child: customText(event.startDate, event.endDate),
-                                ),
-                              ),
-                              Container(
+                              Padding(
                                 padding: const EdgeInsets.all(16),
                                 child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    //Title container
-                                    Row(
-                                      children: [
-                                        Flexible(
-                                          child: Text(
-                                            event.title,
-                                            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ),
-                                      ],
+                                    Text(
+                                      event.title,
+                                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.grey[800]),
+                                      overflow: TextOverflow.ellipsis,
                                     ),
-                                    SizedBox(height: 10),
-                                    Row(
-                                      //Date container
-
-                                      children: [
-                                        //Maby a  invidual  row for time
-                                        Wrap(
-                                          children: [
-                                            // Text(event.startDate ?? 'There is no date found'),
-                                            Icon(
-                                              Icons.calendar_today,
-                                              size: 16,
-                                              color: Color(0xFF007BFF),
-                                            ),
-                                            // const SizedBox(width: 8),
-                                            const SizedBox(width: 3),
-                                            Text(
-                                              // DateFormat('dd-MM-yyyy').format(event.startDate),
-
-                                              DateFormat('yyyy-MM-dd').format(event.startDate),
-                                            ),
-                                            Text(' - '),
-                                            Text(DateFormat('MM-dd-yyyy').format(event.endDate) // Access endDate from the Event object
-                                                ),
-
-                                            const SizedBox(width: 8),
-                                          ],
-                                        )
-                                      ],
+                                    const SizedBox(
+                                      height: 12,
                                     ),
-
-                                    SizedBox(height: 10),
-
-                                    Row(
-                                      children: [
-                                        Icon(
-                                          Icons.location_on,
-                                          size: 16,
-                                          color: Color(0xFF007BFF),
-                                        ),
-                                        Text(event.location ?? 'test location'),
-                                      ],
+                                    infoRow(
+                                      Icons.calendar_today,
+                                      '${DateFormat('MMM dd').format(event.startDate)} - ${DateFormat('MMM dd, yyyy').format(event.endDate)}',
                                     ),
-                                    SizedBox(height: 15),
-
-                                    EventActionButton(eventId: event.id),
+                                    const SizedBox(
+                                      height: 8,
+                                    ),
+                                    infoRow(Icons.access_time, event.time),
+                                    const SizedBox(
+                                      height: 8,
+                                    ),
+                                    infoRow(Icons.location_on, event.location),
+                                    const SizedBox(
+                                      height: 16,
+                                    ),
+                                    EventActionButton(eventId: event.id)
                                   ],
                                 ),
                               ),
@@ -317,10 +264,10 @@ class _EventState extends State<EventPage> {
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
           decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20), boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 4)]),
-          child: Text(
-            customText(event.startDate, event.endDate) as String,
-            style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 12, fontWeight: FontWeight.bold),
-          ),
+          // child: Text(
+          // customText(event.startDate, event.endDate) as String, //Doesn't work gives error //TODO Fix this later
+          // style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 12, fontWeight: FontWeight.bold),
+          // ),
         ));
   }
 
@@ -343,5 +290,25 @@ class _EventState extends State<EventPage> {
             ),
           ),
         ));
+  }
+
+  Widget infoRow(IconData icon, String text) {
+    return Row(
+      children: [
+        Icon(
+          icon,
+          size: 16,
+          color: Theme.of(context).primaryColor,
+        ),
+        SizedBox(
+          width: 8,
+        ),
+        Expanded(
+            child: Text(
+          text,
+          style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+        )),
+      ],
+    );
   }
 }
