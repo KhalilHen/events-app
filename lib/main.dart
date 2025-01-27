@@ -5,6 +5,7 @@ import 'package:pt_events_app/login.dart';
 import 'package:pt_events_app/pages/event.dart';
 import 'package:pt_events_app/pages/forgot_password.dart';
 import 'package:pt_events_app/pages/homepage.dart';
+import 'package:pt_events_app/pages/profile_page.dart';
 import 'package:pt_events_app/pages/sign_up.dart';
 import 'package:pt_events_app/pages/test.dart';
 import 'package:pt_events_app/routes/routes.dart';
@@ -52,7 +53,8 @@ class MyApp extends StatelessWidget {
 
       // home: const SignUp(),
       // home: const AuthGate(),
-      home: Homepage(), //Tempory to  test things out
+      // home: Homepage(), //Tempory to  test things out
+      home: ProfilePage(), //Tempory to  test things out
       // home: EventPage(), //Temporarily while working on the  events page
       routes: {
         AppRoutes.authGate: (context) => const AuthGate(),
@@ -61,6 +63,7 @@ class MyApp extends StatelessWidget {
         AppRoutes.signup: (context) => const SignUp(),
         AppRoutes.forgotPassword: (context) => const ForgotPassword(),
         AppRoutes.event: (context) => EventPage(),
+        AppRoutes.profile: (context) => const ProfilePage(),
       },
     );
   }
