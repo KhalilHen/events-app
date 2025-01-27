@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pt_events_app/auth/auth_service.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -8,6 +9,21 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   int currentIndex = 2;
+  final authService = AuthService();
+  String? username;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchUsername();
+  }
+
+  Future<void> fetchUsername() async {
+    final fetchedUsername = await authService.getLoggedInUsername();
+    setState(() {
+      username = fetchedUsername ?? 'No user logged in';
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +38,13 @@ class _ProfilePageState extends State<ProfilePage> {
         backgroundColor: Theme.of(context).primaryColor,
         centerTitle: true,
       ),
-      body: SingleChildScrollView(),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            profileHeader(),
+          ],
+        ),
+      ),
       bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           currentIndex: currentIndex,
@@ -77,6 +99,53 @@ class _ProfilePageState extends State<ProfilePage> {
               label: "Profile",
             )
           ]),
+    );
+  }
+
+  Widget profileHeader() {
+    return Container(
+      padding: EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        color: Theme.of(context).primaryColor,
+        borderRadius: BorderRadius.vertical(bottom: Radius.circular(32)),
+      ),
+      child: Column(
+        children: [
+          CircleAvatar(
+            radius: 50,
+            backgroundColor: Colors.white,
+            child: Icon(
+              Icons.person,
+              size: 50,
+              color: Theme.of(context).primaryColor,
+            ),
+          ),
+          SizedBox(
+            height: 16,
+          ),
+          Text(
+            "$username  ?? " "unknown user",
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          SizedBox(
+            height: 16,
+          ),
+          OutlinedButton(
+              onPressed: () {},
+              style: OutlinedButton.styleFrom(
+                foregroundColor: Colors.white,
+                side: BorderSide(color: Colors.white),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+              ),
+              child: Text("Edit profile"))
+        ],
+      ),
     );
   }
 }
