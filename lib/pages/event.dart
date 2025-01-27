@@ -118,9 +118,11 @@ class _EventState extends State<EventPage> {
                             // Image.asset()
                             children: [
                               ClipRRect(
-                                borderRadius: BorderRadius.circular(20.0), 
+                                borderRadius: BorderRadius.circular(20.0),
                                 child: Stack(children: [
                                   eventImage(event),
+                                  eventStatus(event),
+                                  eventCategory(event),
                                 ]),
                               ),
                               Positioned(
@@ -306,5 +308,40 @@ class _EventState extends State<EventPage> {
               color: Theme.of(context).primaryColor,
             ),
           );
+  }
+
+  Widget eventStatus(Event event) {
+    return Positioned(
+        top: 16,
+        right: 16,
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20), boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 4)]),
+          child: Text(
+            customText(event.startDate, event.endDate) as String,
+            style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 12, fontWeight: FontWeight.bold),
+          ),
+        ));
+  }
+
+  Widget eventCategory(Event event) {
+    return Positioned(
+        bottom: 16,
+        left: 16,
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+          decoration: BoxDecoration(
+            color: Theme.of(context).primaryColor.withOpacity(0.9),
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Text(
+            event.category ?? "No category",
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ));
   }
 }
