@@ -42,6 +42,7 @@ class _ProfilePageState extends State<ProfilePage> {
         child: Column(
           children: [
             profileHeader(),
+            statistics(),
           ],
         ),
       ),
@@ -144,6 +145,74 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
               child: Text("Edit profile"))
+        ],
+      ),
+    );
+  }
+
+  Widget statistics() {
+    return Padding(
+      padding: EdgeInsets.all(24),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Column(
+            children: [
+              Text(
+                'Events\nAttended',
+                style: TextStyle(fontWeight: FontWeight.bold, color: Theme.of(context).primaryColor, fontSize: 16),
+              ),
+              SizedBox(
+                height: 4,
+              ),
+              Text(
+                "10",
+                style: TextStyle(
+                    // fontWeight: FontWeight.bold,
+                    color: Colors.grey[600],
+                    // color: Theme.of(context).primaryColor,
+                    fontSize: 14),
+              ),
+            ],
+          ),
+          Column(
+            children: [
+              Text(
+                "Active\nRSVPs",
+                style: TextStyle(fontWeight: FontWeight.bold, color: Theme.of(context).primaryColor, fontSize: 16),
+              ),
+              SizedBox(
+                height: 4,
+              ),
+              Text(
+                "10",
+                style: TextStyle(
+                    // fontWeight: FontWeight.bold,
+                    color: Colors.grey[600],
+                    // color: Theme.of(context).primaryColor,
+                    fontSize: 14),
+              ),
+            ],
+          ),
+          Column(
+            children: [
+              Text(
+                "Events\nOrganized",
+                style: TextStyle(fontWeight: FontWeight.bold, color: Theme.of(context).primaryColor, fontSize: 16),
+              ),
+              SizedBox(
+                height: 4,
+              ),
+              Text(
+                "10",
+                style: TextStyle(
+                    // fontWeight: FontWeight.bold,
+                    color: Colors.grey[600],
+                    // color: Theme.of(context).primaryColor,
+                    fontSize: 14),
+              ),
+            ],
+          )
         ],
       ),
     );
