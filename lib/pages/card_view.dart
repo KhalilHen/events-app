@@ -194,76 +194,8 @@ class ExpandedCardView extends StatelessWidget {
                           ],
                         ),
 
-                        // Positioned(
-                        //   bottom: 0,
-                        //   left: 0,
-                        //   right: 0,
-                        //   child: Container(
-                        //     padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                        //     decoration: BoxDecoration(
-                        //       gradient: LinearGradient(
-                        //         begin: Alignment.topCenter,
-                        //         end: Alignment.bottomCenter,
-                        //         colors: [
-                        //           Colors.transparent,
-                        //           Colors.black.withAlpha(51),
-                        //           Colors.black.withAlpha(153),
-                        //           Colors.black.withAlpha(204),
-                        //         ],
-                        //       ),
-                        //     ),
-                        //     child: Stack(
-                        //       children: [
-                        //         Text(
-                        //           event.title,
-                        //           style: TextStyle(
-                        //             color: Colors.black,
-                        //             fontSize: 24,
-                        //             fontWeight: FontWeight.bold,
-                        //             shadows: [
-                        //               Shadow(
-                        //                 offset: Offset(0.5, 0.5),
-                        //                 blurRadius: 3.0,
-                        //                 color: Colors.black.withAlpha(128),
-                        //               ),
-                        //             ],
-                        //           ),
-                        //         ),
-                        //         // Main text with outline
-                        //         Text(
-                        //           event.title,
-                        //           style: TextStyle(
-                        //             color: Colors.white,
-                        //             fontSize: 24,
-                        //             fontWeight: FontWeight.bold,
-                        //             shadows: [
-                        //               Shadow(
-                        //                 offset: Offset(-1, -1),
-                        //                 color: Colors.black.withAlpha(77),
-                        //               ),
-                        //               Shadow(
-                        //                 offset: Offset(1, -1),
-                        //                 color: Colors.black.withAlpha(77),
-                        //               ),
-                        //               Shadow(
-                        //                 offset: Offset(-1, 1),
-                        //                 color: Colors.black.withAlpha(77),
-                        //               ),
-                        //               Shadow(
-                        //                 offset: Offset(1, 1),
-                        //                 color: Colors.black.withAlpha(77),
-                        //               ),
-                        //             ],
-                        //           ),
-                        //         ),
-                        //       ],
-                        //     ),
-                        //   ),
-                        // ),
+                     
 
-                        // Column(
-                        //   children: [],
-                        // ),
                         Padding(padding: const EdgeInsets.only(top: 10)),
 
                         Container(
@@ -355,7 +287,6 @@ class ExpandedCardView extends StatelessWidget {
 
                         //Description Container
 
-                        // Padding(padding: const EdgeInsets.all(10.0)),
                         Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: Column(
@@ -411,12 +342,7 @@ class ExpandedCardView extends StatelessWidget {
                               ),
                             ],
                           ),
-                        ),
-
-                        // EventActionButton(eventId: event.id),
-                        // EventActionButton(eventId: event.id),
-                        // Padding(padding: const EdgeInsets.all(10.0)),
-                        // ],
+                        ),  
 
                         Center(
                           child: Container(

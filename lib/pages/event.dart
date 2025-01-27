@@ -131,10 +131,10 @@ class _EventState extends State<EventPage> {
                                                 height: 200,
                                                 width: double.infinity,
                                                 color: const Color(0xFF007BFF).withOpacity(0.1),
-                                                child: Icon(
+                                                child: const Icon(
                                                   Icons.event,
                                                   size: 50,
-                                                  color: const Color(0xFF007BFF),
+                                                  color:  Color(0xFF007BFF),
                                                 ),
                                               ),
                                       ),
@@ -157,27 +157,13 @@ class _EventState extends State<EventPage> {
 
                                         child: customText(event.startDate, event.endDate),
 
-                                        // Custom text widget
                                       ),
-                                      //   child: Text(
-                                      //     // DateTime.now().isBefore(event.startDate)
-                                      //     //     ? 'Upcoming'
-                                      //     //     : DateTime.now().isAfter(event.endDate)
-                                      //     //         ? 'Past'
-                                      //     //         : 'Ongoing',
-
-                                      //     style: TextStyle(
-                                      //       color: const Color(0xFF007BFF),
-                                      //       fontSize: 12,
-                                      //       fontWeight: FontWeight.bold,
-                                      //     ),
-                                      //   ),
-                                      // ),
+                               
                                     ),
                                   ],
                                 ),
                                 Container(
-                                  padding: EdgeInsets.all(16),
+                                  padding: const EdgeInsets.all(16),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -187,17 +173,15 @@ class _EventState extends State<EventPage> {
                                         children: [
                                           Flexible(
                                             child: Text(
-                                              // event['title'] ?? 'No Title',
 
-                                              event.title, // Access title from the Event object
-                                              // 'Event Title',
+                                              event.title, 
                                               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                                               overflow: TextOverflow.ellipsis,
                                             ),
                                           ),
                                         ],
                                       ),
-                                      SizedBox(height: 10),
+                                const      SizedBox(height: 10),
                                       Row(
                                         //Date container
 
@@ -205,13 +189,11 @@ class _EventState extends State<EventPage> {
                                           //Maby a  invidual  row for time
                                           Wrap(
                                             children: [
-                                              // Text(event.startDate ?? 'There is no date found'),
                                               Icon(
                                                 Icons.calendar_today,
                                                 size: 16,
                                                 color: Color(0xFF007BFF),
                                               ),
-                                              // const SizedBox(width: 8),
                                               const SizedBox(width: 3),
                                               Text(
                                                 // DateFormat('dd-MM-yyyy').format(event.startDate),
@@ -242,47 +224,14 @@ class _EventState extends State<EventPage> {
                                       ),
                                       SizedBox(height: 15),
 
-                                      //Actions buttons
-                                      // EventActionButton(event: event, eventId: event.id),
                                       EventActionButton(eventId: event.id),
 
-                                      // Padding(
-                                      //   padding: EdgeInsets.all(2),
-                                      //   child: ElevatedButton(
-                                      //     onPressed: () {
-                                      //       eventControllers.participateEvent(event.id);
-                                      //     },
-                                      //     style: ElevatedButton.styleFrom(
-                                      //       backgroundColor: const Color(0xFF007BFF),
-                                      //       foregroundColor: Colors.white,
-                                      //       minimumSize: const Size(270, 48),
-                                      //       shape: RoundedRectangleBorder(
-                                      //         borderRadius: BorderRadius.circular(8),
-                                      //       ),
-                                      //     ),
-                                      //     child: Text(
-                                      //       // 'Register ',
-                                      //       eventControllers.isRegistered(event.id) ? 'Leave Event' : 'Register',
-
-                                      //       style: TextStyle(
-                                      //         fontSize: 16,
-                                      //         fontWeight: FontWeight.bold,
-                                      //       ),
-                                      //     ),
-                                      //   ),
-                                      // ),
-                                      // Image.network(' ')
+                                  
                                     ],
                                   ),
                                 ),
-                                // ElevatedButton(
-                                //   onPressed: () {
-                                //     eventControllers.retrteveEvents(); //Too test whether it correctly retrieves the events
-                                //   },
-                                //   child: Text('View Event'),
-                                // ),
+                                
                               ]
-                              // Image.network(' ')
 
                               ),
                         ),
@@ -294,164 +243,6 @@ class _EventState extends State<EventPage> {
             }),
       ),
 
-      // Text('Events', style: Theme.of(context).textTheme.titleMedium),
-
-      // Container(
-      //   decoration: BoxDecoration(
-      //     border: Border.all(color: Color(0xFFE9ECEF), width: 2),
-      //     // color: Color(0xFFE9ECEF),
-      //   ),
-      //   child: Card(
-      //     // color: Color(0xFF605B56),
-      //     // color: Theme.of(). ,
-      //     // color: Theme.of(context).colorScheme.secondary,
-      //     // color: Color(0xFFFFC107),
-
-      //     // color: Color(0xFFF8F9FA),
-      //     color: Color(0xFFF5F5F5),
-
-      //     elevation: 5,
-      //     margin: EdgeInsets.all(10),
-      //     shape: RoundedRectangleBorder(
-      //       borderRadius: BorderRadius.circular(15),
-      //     ),
-      //     child: Column(
-      //       crossAxisAlignment: CrossAxisAlignment.start,
-      //       children: [
-      //         // Event Image
-      //         ClipRRect(
-      //           borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
-      //           child: Image.network(
-      //             'https://source.unsplash.com/600x400/?event',
-      //             height: 150,
-      //             width: double.infinity,
-      //             fit: BoxFit.cover,
-      //           ),
-      //         ),
-      //         // Event Info
-      //         Padding(
-      //           padding: const EdgeInsets.all(15.0),
-      //           child: Column(
-      //             crossAxisAlignment: CrossAxisAlignment.start,
-      //             children: [
-      //               // Event Title
-      //               Text(
-      //                 'Flutter Workshop',
-      //                 style: TextStyle(
-      //                   fontSize: 18,
-      //                   fontWeight: FontWeight.bold,
-      //                 ),
-      //               ),
-      //               SizedBox(height: 8),
-      //               // Event Date
-      //               Row(
-      //                 children: [
-      //                   Icon(Icons.calendar_today, size: 16, color: Colors.grey),
-      //                   SizedBox(width: 5),
-      //                   Text(
-      //                     'January 15, 2025',
-      //                     style: TextStyle(color: Colors.grey),
-      //                   ),
-      //                 ],
-      //               ),
-      //               SizedBox(height: 8),
-      //               // Event Description
-      //               Text(
-      //                 'Join us for an exciting workshop on building cross-platform apps with Flutter.',
-      //                 style: TextStyle(fontSize: 14, color: Colors.grey[700]),
-      //               ),
-      //             ],
-      //           ),
-      //         ),
-      //         // Buttons
-      //         Padding(
-      //           padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
-      //           child: Row(
-      //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //             children: [
-      //               TextButton(
-      //                 onPressed: () {},
-      //                 child: Text('Details'),
-      //                 style: TextButton.styleFrom(
-      //                   foregroundColor: Theme.of(context).primaryColor,
-      //                 ),
-      //               ),
-      //               ElevatedButton(
-      //                 onPressed: () {},
-      //                 child: Text('Join'),
-      //                 style: ElevatedButton.styleFrom(
-      //                   shape: RoundedRectangleBorder(
-      //                     borderRadius: BorderRadius.circular(10),
-      //                   ),
-      //                 ),
-      //               ),
-      //             ],
-      //           ),
-      //         ),
-      //       ],
-      //     ),
-      //   ),
-      // ),
-
-      // Card(
-      //   elevation: 5,
-      //   shape: RoundedRectangleBorder(
-      //     borderRadius: BorderRadius.circular(15),
-      //   ),
-      //   shadowColor: Theme.of(context).primaryColor,
-      //   child: Padding(
-      //     padding: const EdgeInsets.all(16.0),
-      //     child: Column(
-      //       crossAxisAlignment: CrossAxisAlignment.start,
-      //       children: [
-      //         Text(
-      //           'Event Title',
-      //           style: Theme.of(context).textTheme.titleMedium,
-      //         ),
-      //         SizedBox(height: 10),
-      //         Text(
-      //           'Event Description',
-      //           style: Theme.of(context).textTheme.titleMedium,
-      //         ),
-      //         SizedBox(height: 10),
-      //         Row(
-      //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //           children: [
-      //             Text(
-      //               'Event Date',
-      //               style: Theme.of(context).textTheme.titleMedium,
-      //             ),
-      //             Text(
-      //               'Event Location',
-      //               style: Theme.of(context).textTheme.titleMedium,
-      //             ),
-      //           ],
-      //         ),
-      //         SizedBox(height: 20),
-      //         Align(
-      //           alignment: Alignment.centerRight,
-      //           child: ElevatedButton(
-      //             onPressed: () {
-      //               eventControllers.retrieveEvents(); // Test whether it correctly retrieves the events
-      //             },
-      //             child: Text('View Event'),
-      //           ),
-      //         ),
-      //       ],
-      //     ),
-      //   ),
-      // ),
-      // Card(
-      //   child: Column(
-      //     children: [
-      //       // Text('Event 1', style: Theme.of(context).textTheme.titleMedium),
-      //       // Text('Event 1 Description', style: Theme.of(context).textTheme.titleMedium),
-      //       // Text('Event 1 Date', style: Theme.of(context).textTheme.titleMedium),
-      //       // Text('Event 1 Location', style: Theme.of(context).textTheme.titleMedium),
-
-      //     ],
-      //   ),
-      // ),
 
       bottomNavigationBar: BottomNavigationBar(
           currentIndex: currentIndex,

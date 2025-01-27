@@ -35,7 +35,7 @@ class _HomepageState extends State<Homepage> {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        title: Text('Homepage', style: TextStyle(color: Colors.white)),
+        title: const Text('Homepage', style: TextStyle(color: Colors.white)),
         backgroundColor: Theme.of(context).primaryColor,
         centerTitle: true,
         actions: [
@@ -44,10 +44,9 @@ class _HomepageState extends State<Homepage> {
               onPressed: () {
                 authService.signOut(context);
               },
-              icon: Icon(Icons.logout)),
+              icon: const Icon(Icons.logout)),
         ],
       ),
-
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
@@ -58,26 +57,25 @@ class _HomepageState extends State<Homepage> {
                 'Welcome, $username!',
                 style: Theme.of(context).textTheme.titleLarge,
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Text(
                 'Your Events',
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
-                    
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               SizedBox(
                 height: 430,
                 child: FutureBuilder<List<Event>>(
                   future: eventController.retrieveUserEvents(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(child: CircularProgressIndicator());
+                      return const Center(child: CircularProgressIndicator());
                     } else if (snapshot.hasError) {
                       return Center(child: Text('Error: ${snapshot.error}'));
                     } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                      return Center(child: Text('No events found.'));
+                      return const Center(child: Text('No events found.'));
                     }
 
                     final events = snapshot.data!;
@@ -88,7 +86,7 @@ class _HomepageState extends State<Homepage> {
                         final event = events[index];
                         return Container(
                           width: 300, // Fixed width for each card
-                          padding: EdgeInsets.only(right: 16),
+                          padding: const EdgeInsets.only(right: 16),
                           child: Card(
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15),
@@ -98,7 +96,7 @@ class _HomepageState extends State<Homepage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 ClipRRect(
-                                  borderRadius: BorderRadius.vertical(
+                                  borderRadius: const BorderRadius.vertical(
                                     top: Radius.circular(15),
                                   ),
                                   child: event.image != null
@@ -107,27 +105,27 @@ class _HomepageState extends State<Homepage> {
                                           height: 200,
                                           width: double.infinity,
                                           color: const Color(0xFF007BFF).withOpacity(0.1),
-                                          child: Icon(
+                                          child: const Icon(
                                             Icons.event,
                                             size: 50,
-                                            color: const Color(0xFF007BFF),
+                                            color: Color(0xFF007BFF),
                                           ),
                                         ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.all(16),
+                                  padding: const EdgeInsets.all(16),
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         event.title,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,
                                         ),
                                         overflow: TextOverflow.ellipsis,
                                       ),
-                                      SizedBox(height: 12),
+                                      const SizedBox(height: 12),
                                       Row(
                                         children: [
                                           Icon(
@@ -201,28 +199,6 @@ class _HomepageState extends State<Homepage> {
           ),
         ),
       ),
-      // child: Padding(
-      //   padding: const EdgeInsets.only(top: 50.0),
-      //   child: Column(
-      //     mainAxisAlignment: MainAxisAlignment.start,
-      //     children: [
-      //       Text(
-      //         'Welcome, $username!',
-      //         style: Theme.of(context).textTheme.titleMedium,
-      //       ),
-      //       SizedBox(height: 25),
-      //       Text('Your signed up or featured events/activities', style: Theme.of(context).textTheme.titleMedium),
-      //       SizedBox(height: 20),
-
-      //       TextButton(
-      //           onPressed: () {
-      //             eventController.retrieveUserEvents();
-      //           },
-      //           child: Text('View Events')),
-      //     ],
-      //   ),
-      // ),
-
       bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           currentIndex: currentIndex,
