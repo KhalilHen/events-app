@@ -16,12 +16,13 @@ class ExpandedCardView extends StatelessWidget {
         child: Material(
           child: CustomScrollView(
             slivers: [
+              sliverAppBar(context),
               SliverToBoxAdapter(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    headerImage(),
                     eventInfo(context),
+                    eventDescription(),
                   ],
                 ),
               ),
@@ -42,6 +43,11 @@ class ExpandedCardView extends StatelessWidget {
       flexibleSpace: FlexibleSpaceBar(
         background: Stack(
           fit: StackFit.expand,
+          children: [
+            headerImage(),
+            header(),
+            headerContent(context),
+          ],
         ),
       ),
     );
@@ -144,7 +150,7 @@ class ExpandedCardView extends StatelessWidget {
             context,
             Icons.schedule,
             'Time',
-            event.time,
+            event.time.substring(0, 5), //Too display only the first 5 digits of the time . In other words 12:00/
           ),
           SizedBox(height: 12),
           infoTile(
@@ -204,6 +210,44 @@ class ExpandedCardView extends StatelessWidget {
               ],
             ),
           ),
+        ],
+      ),
+    );
+  }
+
+  Widget eventDescription() {
+    return Container(
+      padding: EdgeInsets.all(20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Event description",
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.grey[800],
+            ),
+          ),
+          SizedBox(
+            height: 16,
+          ),
+          Container(
+            padding: EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Colors.grey[100],
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: Colors.grey[200]!, width: 1),
+            ),
+            child: Text(
+              event.description,
+              style: TextStyle(
+                color: Colors.grey[700],
+                fontSize: 16,
+                height: 1.5,
+              ),
+            ),
+          )
         ],
       ),
     );
