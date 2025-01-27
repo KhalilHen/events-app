@@ -43,6 +43,9 @@ class _ProfilePageState extends State<ProfilePage> {
           children: [
             profileHeader(),
             statistics(),
+            settingsSection(),
+            supportSection(),
+            accountSection(),
           ],
         ),
       ),
@@ -125,7 +128,7 @@ class _ProfilePageState extends State<ProfilePage> {
             height: 16,
           ),
           Text(
-            "$username  ?? " "unknown user",
+            "$username " ?? "unknown user",
             style: TextStyle(
               color: Colors.white,
               fontSize: 24,
@@ -216,5 +219,102 @@ class _ProfilePageState extends State<ProfilePage> {
         ],
       ),
     );
+  }
+
+  Widget settingsSection() {
+    return section('Settings', [
+      settingTile(Icons.notifications_outlined, "Notifications", "Manage notifications"),
+      settingTile(
+        Icons.lock_outline,
+        'Privacy',
+        'Control your privacy settings',
+      ),
+      settingTile(
+        Icons.color_lens_outlined,
+        'Appearance',
+        'Customize app appearance',
+      ),
+    ]);
+  }
+
+  Widget settingTile(IconData icon, String title, String subtitle) {
+    return ListTile(
+      leading: Container(
+        padding: EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          color: Theme.of(context).primaryColor.withAlpha(25),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Icon(
+          icon,
+          color: Theme.of(context).primaryColor,
+        ),
+      ),
+      title: Text(
+        title,
+        style: TextStyle(
+          fontWeight: FontWeight.w500,
+          // fontWeight: FontWeight.bold,
+          color: Colors.grey[800],
+        ),
+      ),
+      subtitle: Text(
+        subtitle,
+        style: TextStyle(
+          color: Colors.grey[600],
+          fontSize: 12,
+        ),
+      ),
+      trailing: Icon(
+        Icons.chevron_right,
+        color: Colors.grey[400],
+      ),
+    );
+  }
+
+  Widget section(String title, List<Widget> items) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(title, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.grey[800])),
+          SizedBox(
+            height: 16,
+          ),
+          Container(
+            decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16), boxShadow: [
+              BoxShadow(
+                color: Colors.black.withAlpha(13),
+                blurRadius: 10,
+                offset: Offset(0, 4),
+              )
+            ]),
+            child: Column(
+              children: items,
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget accountSection() {
+    return section('Account', [
+      settingTile(Icons.person_outline, "Personal information", "Update your personal information"),
+      settingTile(Icons.email_outlined, "Email settings", "Manager your email settings"),
+      settingTile(Icons.password_outlined, "Change password", "Update your password")
+    ]);
+  }
+
+// Widget supportSection() {
+//   return section(title, items)
+// }
+  Widget supportSection() {
+    return section("Support", [
+      settingTile(Icons.help_outline, "Help center", "Get help with a event"),
+      settingTile(Icons.report_outlined, "Report a problem", "Contact us when there is something wrong"),
+      settingTile(Icons.info_outline, "About us", "Learn more about us and the app!")
+    ]);
   }
 }
