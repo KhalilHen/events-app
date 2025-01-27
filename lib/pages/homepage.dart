@@ -210,7 +210,7 @@ class _HomepageState extends State<Homepage> {
             });
             switch (index) {
               case 0:
-                Navigator.pushReplacementNamed(context, '/home');
+                Navigator.pushReplacementNamed(context, '/homepage');
                 break;
               case 1:
                 Navigator.pushReplacementNamed(context, '/event');
