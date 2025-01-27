@@ -48,152 +48,157 @@ class _HomepageState extends State<Homepage> {
         ],
       ),
 
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Welcome, $username!',
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            SizedBox(height: 20),
-            Text(
-              'Your Events',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            SizedBox(height: 16),
-            SizedBox(
-              height: 430,
-              child: FutureBuilder<List<Event>>(
-                future: eventController.retrieveUserEvents(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
-                  } else if (snapshot.hasError) {
-                    return Center(child: Text('Error: ${snapshot.error}'));
-                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return Center(child: Text('No events found.'));
-                  }
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Welcome, $username!',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              SizedBox(height: 20),
+              Text(
+                'Your Events',
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                    
+              ),
+              SizedBox(height: 16),
+              SizedBox(
+                height: 430,
+                child: FutureBuilder<List<Event>>(
+                  future: eventController.retrieveUserEvents(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(child: CircularProgressIndicator());
+                    } else if (snapshot.hasError) {
+                      return Center(child: Text('Error: ${snapshot.error}'));
+                    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                      return Center(child: Text('No events found.'));
+                    }
 
-                  final events = snapshot.data!;
-                  return ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: events.length,
-                    itemBuilder: (context, index) {
-                      final event = events[index];
-                      return Container(
-                        width: 300, // Fixed width for each card
-                        padding: EdgeInsets.only(right: 16),
-                        child: Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          elevation: 7,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.vertical(
-                                  top: Radius.circular(15),
-                                ),
-                                child: event.image != null
-                                    ? Image.network(event.image!)
-                                    : Container(
-                                        height: 200,
-                                        width: double.infinity,
-                                        color: const Color(0xFF007BFF).withOpacity(0.1),
-                                        child: Icon(
-                                          Icons.event,
-                                          size: 50,
-                                          color: const Color(0xFF007BFF),
+                    final events = snapshot.data!;
+                    return ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: events.length,
+                      itemBuilder: (context, index) {
+                        final event = events[index];
+                        return Container(
+                          width: 300, // Fixed width for each card
+                          padding: EdgeInsets.only(right: 16),
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            elevation: 7,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(15),
+                                  ),
+                                  child: event.image != null
+                                      ? Image.network(event.image!)
+                                      : Container(
+                                          height: 200,
+                                          width: double.infinity,
+                                          color: const Color(0xFF007BFF).withOpacity(0.1),
+                                          child: Icon(
+                                            Icons.event,
+                                            size: 50,
+                                            color: const Color(0xFF007BFF),
+                                          ),
                                         ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.all(16),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        event.title,
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
                                       ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.all(16),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      event.title,
+                                      SizedBox(height: 12),
+                                      Row(
+                                        children: [
+                                          Icon(
+                                            Icons.calendar_today,
+                                            size: 16,
+                                            color: Color(0xFF007BFF),
+                                          ),
+                                          SizedBox(width: 8),
+                                          Expanded(
+                                            child: Text(
+                                              '${DateFormat('yyyy-MM-dd').format(event.startDate)} - ${DateFormat('MM-dd-yyyy').format(event.endDate)}',
+                                              style: TextStyle(fontSize: 14),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: 8),
+                                      Row(
+                                        children: [
+                                          Icon(
+                                            Icons.location_on,
+                                            size: 16,
+                                            color: Color(0xFF007BFF),
+                                          ),
+                                          SizedBox(width: 8),
+                                          Expanded(
+                                            child: Text(
+                                              event.location ?? 'No location',
+                                              style: TextStyle(fontSize: 14),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Spacer(),
+                                Padding(
+                                  padding: EdgeInsets.all(16),
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      eventController.leaveEvent(event.id);
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: const Color(0xFF007BFF),
+                                      foregroundColor: Colors.white,
+                                      minimumSize: Size(270, 48),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                    ),
+                                    child: const Text(
+                                      'Leave the event ',
                                       style: TextStyle(
-                                        fontSize: 20,
+                                        fontSize: 16,
                                         fontWeight: FontWeight.bold,
                                       ),
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    SizedBox(height: 12),
-                                    Row(
-                                      children: [
-                                        Icon(
-                                          Icons.calendar_today,
-                                          size: 16,
-                                          color: Color(0xFF007BFF),
-                                        ),
-                                        SizedBox(width: 8),
-                                        Expanded(
-                                          child: Text(
-                                            '${DateFormat('yyyy-MM-dd').format(event.startDate)} - ${DateFormat('MM-dd-yyyy').format(event.endDate)}',
-                                            style: TextStyle(fontSize: 14),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(height: 8),
-                                    Row(
-                                      children: [
-                                        Icon(
-                                          Icons.location_on,
-                                          size: 16,
-                                          color: Color(0xFF007BFF),
-                                        ),
-                                        SizedBox(width: 8),
-                                        Expanded(
-                                          child: Text(
-                                            event.location ?? 'No location',
-                                            style: TextStyle(fontSize: 14),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Spacer(),
-                              Padding(
-                                padding: EdgeInsets.all(16),
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    eventController.leaveEvent(event.id);
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: const Color(0xFF007BFF),
-                                    foregroundColor: Colors.white,
-                                    minimumSize: Size(270, 48),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                  ),
-                                  child: const Text(
-                                    'Leave the event ',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                  );
-                },
+                        );
+                      },
+                    );
+                  },
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       // child: Padding(

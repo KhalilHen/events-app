@@ -10,43 +10,28 @@ class EventControllers {
   final supabase = Supabase.instance.client;
   // final SupabaseClient supaBase = Supabase.instance.client;
   final authService = AuthService();
-Future<List<Event>> retrieveEvents() async {
-  try {
-    // Fetch highlighted events
-    final highlightedResponse = await supabase
-        .from('events')
-        .select()
-        .eq('high_light', true);
 
-    // Fetch non-highlighted events
-    final otherResponse = await supabase
-        .from('events')
-        .select()
-        .neq('high_light', true);
+  Future<List<Event>> retrieveEvents() async {
+    try {
+      final response = await supabase.from('events').select().order('high_light', ascending: false);
 
-    // Combine the responses
-    final response = [...highlightedResponse, ...otherResponse];
+      debugPrint('Events response received: ${response != null ? 'yes' : 'no'}');
 
-    // If response is null, handle the error case
-    if (response == null) {
-      print('Error retrieving events: response is null');
+      if (response == null) {
+        debugPrint('Error: Response is null');
+        return [];
+      }
+
+      final events = (response as List<dynamic>).map((data) => Event.fromMap(data as Map<String, dynamic>)).toList();
+
+      debugPrint('Successfully retrieved ${events.length} events');
+      return events;
+    } catch (e, stackTrace) {
+      debugPrint('Error retrieving events: $e');
+      debugPrint('Stack trace: $stackTrace');
       return [];
     }
-
-    // Ensure the response is cast to a List
-    final data = response as List<dynamic>;
-
-    print('Events retrieved successfully: ${data.length} items');
-
-    // Map the data to a list of Event objects
-    return data.map((e) => Event.fromMap(e as Map<String, dynamic>)).toList();
-  } catch (e) {
-    // Log and handle any exceptions
-    print('Error retrieving events: $e');
-    return [];
   }
-}
-
 
   Future<List<Event>> retrieveUserEvents() async {
     try {
@@ -126,7 +111,7 @@ Future<List<Event>> retrieveEvents() async {
     }
   }
 
-   leaveEvent(
+  leaveEvent(
     int eventId,
   ) async {
     try {
