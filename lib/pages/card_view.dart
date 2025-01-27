@@ -53,28 +53,27 @@ class ExpandedCardView extends StatelessWidget {
                                 bottomLeft: Radius.circular(15),
                                 bottomRight: Radius.circular(15),
                               ),
-                              child:
-                              event.image == null
+                              child: event.image == null
                                   ? Container(
+                                      height: 350,
+                                      width: double.infinity,
+                                      color: const Color(0xFF007BFF).withOpacity(0.1),
+                                      child: Icon(
+                                        Icons.event,
+                                        size: 50,
+                                        color: const Color(0xFF007BFF),
+                                      ),
+                                    )
+                                  : Image.network(
+                                      event.image!,
+                                      // 'https://t3.ftcdn.net/jpg/00/72/98/56/360_F_72985661_LU1Xk0YQiPBwOuesuuJgwTn0NPlwP8ob.jpg',
 
-      height: 350,
-      width: double.infinity,
-                                color: const Color(0xFF007BFF).withOpacity(0.1),
-                                child: Icon(Icons.event, size: 50, color: const Color(0xFF007BFF),),
-
-    )
-                                  :
-                              
-                               Image.network(
-                                event.image!, 
-                                // 'https://t3.ftcdn.net/jpg/00/72/98/56/360_F_72985661_LU1Xk0YQiPBwOuesuuJgwTn0NPlwP8ob.jpg',
-
-                                fit: BoxFit.cover,
-                                // fit: BoxFit.fill,
-                                // fit: BoxFit.contain,
-                                width: double.infinity,
-                                height: 350,
-                              ),
+                                      fit: BoxFit.cover,
+                                      // fit: BoxFit.fill,
+                                      // fit: BoxFit.contain,
+                                      width: double.infinity,
+                                      height: 350,
+                                    ),
                             ),
                             Positioned(
                               top: 40,
@@ -193,8 +192,6 @@ class ExpandedCardView extends StatelessWidget {
                             ),
                           ],
                         ),
-
-                     
 
                         Padding(padding: const EdgeInsets.only(top: 10)),
 
@@ -342,7 +339,7 @@ class ExpandedCardView extends StatelessWidget {
                               ),
                             ],
                           ),
-                        ),  
+                        ),
 
                         Center(
                           child: Container(
