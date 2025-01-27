@@ -21,6 +21,7 @@ class ExpandedCardView extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     headerImage(),
+                    eventInfo(context),
                   ],
                 ),
               ),
@@ -76,5 +77,135 @@ class ExpandedCardView extends StatelessWidget {
               color: Colors.grey[400],
             ),
           );
+  }
+
+  Widget header() {
+    return Container(
+      decoration: BoxDecoration(
+          gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [
+        Colors.transparent,
+        Colors.black.withAlpha(179),
+      ])),
+    );
+  }
+
+  Widget headerContent(BuildContext context) {
+    return Positioned(
+        left: 16,
+        right: 16,
+        bottom: 16,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20)),
+              child: Text(
+                event.category ?? "general",
+                style: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            SizedBox(height: 8),
+            Text(
+              event.title,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+                shadows: [
+                  Shadow(
+                    offset: Offset(0, 2),
+                    blurRadius: 4,
+                    color: Colors.black.withOpacity(0.5),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ));
+  }
+
+  Widget eventInfo(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(20),
+      child: Column(
+        children: [
+          infoTile(
+            context,
+            Icons.calendar_month_outlined,
+            'Date',
+            '${DateFormat('MMM dd').format(event.startDate)} - ${DateFormat('MMM dd, yyyy').format(event.endDate)}',
+          ),
+          SizedBox(height: 12),
+          infoTile(
+            context,
+            Icons.schedule,
+            'Time',
+            event.time,
+          ),
+          SizedBox(height: 12),
+          infoTile(
+            context,
+            Icons.location_on,
+            'Location',
+            event.location,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget infoTile(BuildContext context, IconData icon, String label, String value) {
+    return Container(
+      padding: EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.grey[100],
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.grey[200]!, width: 1),
+      ),
+      child: Row(
+        children: [
+          Container(
+            padding: EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: Theme.of(context).primaryColor.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Icon(
+              icon,
+              color: Theme.of(context).primaryColor,
+              size: 24,
+            ),
+          ),
+          SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  label,
+                  style: TextStyle(
+                    color: Colors.grey[600],
+                    fontSize: 14,
+                  ),
+                ),
+                SizedBox(height: 4),
+                Text(
+                  value,
+                  style: TextStyle(
+                    color: Colors.grey[800],
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
