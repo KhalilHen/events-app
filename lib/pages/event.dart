@@ -23,7 +23,7 @@ class EventPage extends StatefulWidget {
 }
 
 class _EventState extends State<EventPage> {
-    final  String fallbackImageUrl = 'https://t3.ftcdn.net/jpg/00/72/98/56/360_F_72985661_LU1Xk0YQiPBwOuesuuJgwTn0NPlwP8ob.jpg';
+  final String fallbackImageUrl = 'https://t3.ftcdn.net/jpg/00/72/98/56/360_F_72985661_LU1Xk0YQiPBwOuesuuJgwTn0NPlwP8ob.jpg';
 
   int currentIndex = 1;
   final eventControllers = EventControllers();
@@ -62,28 +62,25 @@ class _EventState extends State<EventPage> {
         child: FutureBuilder<List<Event>>(
             future: eventControllers.retrieveEvents(),
             builder: (context, AsyncSnapshot<List<Event>> snapshot) {
-    print('Connection State: ${snapshot.connectionState}');
-    print('Has Error: ${snapshot.hasError}');
-    print('Has Data: ${snapshot.hasData}');
-              if(snapshot.hasData) {
-
+              print('Connection State: ${snapshot.connectionState}');
+              print('Has Error: ${snapshot.hasError}');
+              print('Has Data: ${snapshot.hasData}');
+              if (snapshot.hasData) {
                 print('Data length: ${snapshot.data!.length}');
-
               }
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(
                   child: CircularProgressIndicator(),
                 );
               } else if (snapshot.hasError) {
-                      print('Error: ${snapshot.error}');  // Debug print
+                print('Error: ${snapshot.error}'); // Debug print
 
                 // final events = snapshot.data ?? []; // Safe handling if data is null
 
                 return Center(
                   child: Text('Error: ${snapshot.error}'),
                 );
-              } 
- else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
                 return Center(child: Text('No events available.'));
               }
               // else if (!snapshot.hasData || snapshot.data!.isEmpty) {
@@ -92,10 +89,8 @@ class _EventState extends State<EventPage> {
 
               // final events = snapshot.data!;
               final events = snapshot.data ?? []; // Safe handling if data is null
-              
 
               return ListView.builder(
-         
                 itemCount: events.length,
                 itemBuilder: (context, index) {
                   final event = events[index];
@@ -127,26 +122,23 @@ class _EventState extends State<EventPage> {
                               children: [
                                 Stack(
                                   children: [
-                                   ClipRRect(
-  borderRadius: BorderRadius.circular(20.0), // For rounded corners
-  child: InkWell(
-
-
-
-    
-    child:  
-    event.image != null ? Image.network(event.image!)  :  Container(
-
-      height: 200,
-      width: double.infinity,
-                                color: const Color(0xFF007BFF).withOpacity(0.1),
-                                child: Icon(Icons.event, size: 50, color: const Color(0xFF007BFF),),
-
-    ),
-    
-
-  ), 
-),
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(20.0), // For rounded corners
+                                      child: InkWell(
+                                        child: event.image != null
+                                            ? Image.network(event.image!)
+                                            : Container(
+                                                height: 200,
+                                                width: double.infinity,
+                                                color: const Color(0xFF007BFF).withOpacity(0.1),
+                                                child: Icon(
+                                                  Icons.event,
+                                                  size: 50,
+                                                  color: const Color(0xFF007BFF),
+                                                ),
+                                              ),
+                                      ),
+                                    ),
                                     Positioned(
                                       top: 12,
                                       right: 12,
@@ -462,14 +454,17 @@ class _EventState extends State<EventPage> {
       // ),
 
       bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
           currentIndex: currentIndex,
+          selectedItemColor: Theme.of(context).primaryColor,
+          unselectedItemColor: Colors.grey,
           onTap: (index) {
             setState(() {
               currentIndex = index;
             });
             switch (index) {
               case 0:
-                Navigator.pushReplacementNamed(context, '/homepage');
+                Navigator.pushReplacementNamed(context, '/home');
                 break;
               case 1:
                 Navigator.pushReplacementNamed(context, '/event');
@@ -500,7 +495,7 @@ class _EventState extends State<EventPage> {
                   icon: Icon(Icons.event),
                 ),
                 label: 'Events'),
-          
+            BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: "Account")
           ]),
     );
   }

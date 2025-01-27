@@ -56,7 +56,7 @@ class _SignUpState extends State<SignUp> {
     });
   }
 
-  emailListener(TextEditingController emailController, Function(String) checkEmailAvailability) {
+  emailListener(TextEditingController emailController, Function(String) checkEmailAvailability) { 
     emailController.addListener(() {
       if (emailDebounce?.isActive ?? false) emailDebounce?.cancel();
 
@@ -125,10 +125,10 @@ class _SignUpState extends State<SignUp> {
   Future<void> checkEmailAvailability(String email) async {
     // if (email.isEmpty || email.length < 3) {
     //   setState(() {
-    //     isEmailAvailable = false;
-    //   });
-    //   return;
-    // }
+      //     isEmailAvailable = false;
+      //   });
+      //   return;
+      // }
 
     try {
       final available = await authService.isEmailAvailable(email);

@@ -1,7 +1,6 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
-
 class AuthService {
   final SupabaseClient supaBase = Supabase.instance.client;
   Timer? usernameDebounce;
@@ -12,7 +11,7 @@ class AuthService {
   }
 
   // Future<bool> isUsernameAvailable(String username) async {
-  //   final response = await Supabase.instance.client.from('persons').select('username').eq('username', username).execute();
+  //   final response = await Supabase.instance.cl  ient.from('persons').select('username').eq('username', username).execute();
 
   //   if (response != null) {
   //     return false;

@@ -57,7 +57,7 @@ class ExpandedCardView extends StatelessWidget {
                               event.image == null
                                   ? Container(
 
-      height: 200,
+      height: 350,
       width: double.infinity,
                                 color: const Color(0xFF007BFF).withOpacity(0.1),
                                 child: Icon(Icons.event, size: 50, color: const Color(0xFF007BFF),),
