@@ -256,7 +256,7 @@ class ExpandedCardView extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            "Additional Informatio ",
+            "Additional Information ",
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
