@@ -250,7 +250,7 @@ class _HomepageState extends State<Homepage> {
                 },
                 icon: Icon(Icons.person_outline),
               ),
-              label: "Account",
+              label: "Profile",
             )
           ]),
     );

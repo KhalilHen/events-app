@@ -216,7 +216,7 @@ class _EventState extends State<EventPage> {
                 },
                 icon: Icon(Icons.person_outline),
               ),
-              label: "Account",
+              label: "Profile",
             )
           ]),
     );
