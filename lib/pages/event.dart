@@ -224,23 +224,10 @@ class _EventState extends State<EventPage> {
     );
   }
 
-  Widget customText(DateTime startDate, DateTime endDate) {
-    String status;
-    if (DateTime.now().isBefore(startDate)) {
-      status = 'Upcoming';
-    } else if (DateTime.now().isAfter(endDate)) {
-      status = 'Past';
-    } else {
-      status = 'Ongoing';
-    }
-    return Text(
-      status,
-      style: TextStyle(
-        color: const Color(0xFF007BFF),
-        fontSize: 12,
-        fontWeight: FontWeight.bold,
-      ),
-    );
+  String customText(DateTime startDate, DateTime endDate) {
+    if (DateTime.now().isBefore(startDate)) return 'Upcoming';
+    if (DateTime.now().isAfter(endDate)) return 'Past';
+    return 'Ongoing';
   }
 
   Widget eventImage(Event event) {
@@ -270,10 +257,10 @@ class _EventState extends State<EventPage> {
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
           decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20), boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 4)]),
-          // child: Text(
-          // customText(event.startDate, event.endDate) as String, //Doesn't work gives error //TODO Fix this later
-          // style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 12, fontWeight: FontWeight.bold),
-          // ),
+          child: Text(
+            customText(event.startDate, event.endDate), //Doesn't work gives error //TODO Fix this later
+            style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 12, fontWeight: FontWeight.bold),
+          ),
         ));
   }
 
