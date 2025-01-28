@@ -31,9 +31,9 @@ class _ProfilePageState extends State<ProfilePage> {
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
         elevation: 0,
-        title: Text(
+        title: const  Text(
           "Your Profile",
-          style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
+          style:  TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
         ),
         backgroundColor: Theme.of(context).primaryColor,
         centerTitle: true,
@@ -108,10 +108,10 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Widget profileHeader() {
     return Container(
-      padding: EdgeInsets.all(24),
+      padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
         color: Theme.of(context).primaryColor,
-        borderRadius: BorderRadius.vertical(bottom: Radius.circular(32)),
+        borderRadius: const BorderRadius.vertical(bottom: Radius.circular(32)),
       ),
       child: Column(
         children: [
@@ -124,30 +124,30 @@ class _ProfilePageState extends State<ProfilePage> {
               color: Theme.of(context).primaryColor,
             ),
           ),
-          SizedBox(
+     const     SizedBox(
             height: 16,
           ),
           Text(
             "$username " ?? "unknown user",
-            style: TextStyle(
+            style:  const TextStyle(
               color: Colors.white,
               fontSize: 24,
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(
+        const   SizedBox(
             height: 16,
           ),
           OutlinedButton(
               onPressed: () {},
               style: OutlinedButton.styleFrom(
                 foregroundColor: Colors.white,
-                side: BorderSide(color: Colors.white),
+                side:  const BorderSide(color: Colors.white),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
               ),
-              child: Text("Edit profile"))
+              child: const Text("Edit profile"))
         ],
       ),
     );
@@ -155,7 +155,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Widget statistics() {
     return Padding(
-      padding: EdgeInsets.all(24),
+      padding: const  EdgeInsets.all(24),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
@@ -165,7 +165,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 'Events\nAttended',
                 style: TextStyle(fontWeight: FontWeight.bold, color: Theme.of(context).primaryColor, fontSize: 16),
               ),
-              SizedBox(
+            const  SizedBox(
                 height: 4,
               ),
               Text(
@@ -184,7 +184,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 "Active\nRSVPs",
                 style: TextStyle(fontWeight: FontWeight.bold, color: Theme.of(context).primaryColor, fontSize: 16),
               ),
-              SizedBox(
+           const   SizedBox(
                 height: 4,
               ),
               Text(
@@ -203,7 +203,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 "Events\nOrganized",
                 style: TextStyle(fontWeight: FontWeight.bold, color: Theme.of(context).primaryColor, fontSize: 16),
               ),
-              SizedBox(
+           const   SizedBox(
                 height: 4,
               ),
               Text(
@@ -240,7 +240,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget settingTile(IconData icon, String title, String subtitle) {
     return ListTile(
       leading: Container(
-        padding: EdgeInsets.all(8),
+        padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
           color: Theme.of(context).primaryColor.withAlpha(25),
           borderRadius: BorderRadius.circular(8),
@@ -274,12 +274,12 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Widget section(String title, List<Widget> items) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(title, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.grey[800])),
-          SizedBox(
+  const        SizedBox(
             height: 16,
           ),
           Container(

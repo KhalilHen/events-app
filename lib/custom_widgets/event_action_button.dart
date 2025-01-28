@@ -39,7 +39,7 @@ class _EventActionButtonState extends State<EventActionButton> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(2),
+      padding:  const EdgeInsets.all(2),
       child: ElevatedButton(
         onPressed: isRegistered == null ? null : toggleRegistration,
         style: ElevatedButton.styleFrom(

@@ -56,7 +56,7 @@ class _SignUpState extends State<SignUp> {
     });
   }
 
-  emailListener(TextEditingController emailController, Function(String) checkEmailAvailability) { 
+  emailListener(TextEditingController emailController, Function(String) checkEmailAvailability) {
     emailController.addListener(() {
       if (emailDebounce?.isActive ?? false) emailDebounce?.cancel();
 
@@ -71,23 +71,6 @@ class _SignUpState extends State<SignUp> {
       });
     });
   }
-  // usernameListener() {
-  //   usernameController.addListener(() {
-  //     if (usernameDebounce?.isActive ?? false) usernameDebounce?.cancel();
-  //     usernameDebounce = Timer(const Duration(milliseconds: 500), () {
-  //       checkUsernameAvailability(usernameController.text);
-  //     });
-  //   });
-  // }
-
-  // emailListener() {
-  //   emailController.addListener(() {
-  //     if (emailDebounce?.isActive ?? false) emailDebounce?.cancel();
-  //     emailDebounce = Timer(const Duration(milliseconds: 500), () {
-  //       checkEmailAvailability(emailController.text);
-  //     });
-  //   });
-  // }
 
   @override
   void dispose() {
@@ -101,13 +84,6 @@ class _SignUpState extends State<SignUp> {
   }
 
   Future<void> checkUsernameAvailability(String username) async {
-    // if (username.isEmpty || username.length < 3) {
-    //   setState(() {
-    //     isNameAvaible = false;
-    //   });
-    //   return;
-    // }
-
     try {
       final available = await authService.isUsernameAvailable(username);
       setState(() {
@@ -125,10 +101,10 @@ class _SignUpState extends State<SignUp> {
   Future<void> checkEmailAvailability(String email) async {
     // if (email.isEmpty || email.length < 3) {
     //   setState(() {
-      //     isEmailAvailable = false;
-      //   });
-      //   return;
-      // }
+    //     isEmailAvailable = false;
+    //   });
+    //   return;
+    // }
 
     try {
       final available = await authService.isEmailAvailable(email);
@@ -148,10 +124,9 @@ class _SignUpState extends State<SignUp> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Sign Up',
-           style: TextStyle(color: Colors.white),
-
+          style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
         backgroundColor: Theme.of(context).primaryColor,
@@ -171,19 +146,19 @@ class _SignUpState extends State<SignUp> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 TextFormField(
                   controller: emailController,
                   decoration: InputDecoration(
                     labelText: 'Email',
                     hintText: 'Enter your email',
-                    border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.email),
+                    border: const OutlineInputBorder(),
+                    prefixIcon: const Icon(Icons.email),
                     suffixIcon: isEmailAvailable == null
                         ? null
                         : isEmailAvailable!
-                            ? Icon(Icons.check, color: Colors.green)
-                            : Icon(Icons.error, color: Colors.red),
+                            ? const Icon(Icons.check, color: Colors.green)
+                            : const Icon(Icons.error, color: Colors.red),
                   ),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) {
@@ -202,21 +177,21 @@ class _SignUpState extends State<SignUp> {
                     return null;
                   },
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 TextFormField(
                   controller: usernameController,
                   decoration: InputDecoration(
                     labelText: 'Username',
                     hintText: 'Enter your username',
-                    border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.person),
+                    border: const OutlineInputBorder(),
+                    prefixIcon: const Icon(Icons.person),
                     // suffixIcon: isNameAvaible ? Icon(Icons.check, color: Colors.green) : Icon(Icons.error, color: Colors.red),
 
                     suffixIcon: isNameAvaible == null
                         ? null
                         : isNameAvaible!
-                            ? Icon(Icons.check, color: Colors.green)
-                            : Icon(Icons.error, color: Colors.red),
+                            ? const Icon(Icons.check, color: Colors.green)
+                            : const Icon(Icons.error, color: Colors.red),
                   ),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) {
@@ -232,25 +207,14 @@ class _SignUpState extends State<SignUp> {
 
                     return null;
                   },
-                  // onFieldSubmitted: (value) async {
-                  //   final available = await isUsernameAvailable(value);
-
-                  //   if (!available) {
-                  //     ScaffoldMessenger.of(context).showSnackBar(
-                  //       SnackBar(
-                  //         content: Text('Username already taken'),
-                  //       ),
-                  //     );
-                  //   }
-                  // },
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 TextFormField(
                   controller: passwordController,
                   decoration: InputDecoration(
                     labelText: 'Password',
                     hintText: 'Enter your password',
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                     suffixIcon: IconButton(onPressed: () => setState(() => passwordVisible = !passwordVisible), icon: Icon(passwordVisible ? Icons.visibility : Icons.visibility_off)),
                   ),
                   obscureText: !passwordVisible,
@@ -261,14 +225,14 @@ class _SignUpState extends State<SignUp> {
                     return null;
                   },
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 TextFormField(
                   controller: confirmPasswordController,
                   decoration: InputDecoration(
                     labelText: 'Confirm Password ',
                     hintText: 'Enter your password',
                     suffixIcon: IconButton(onPressed: () => setState(() => passwordVisible = !passwordVisible), icon: Icon(passwordVisible ? Icons.visibility : Icons.visibility_off)),
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                   ),
                   obscureText: !passwordVisible,
                   validator: (value) {
@@ -280,7 +244,7 @@ class _SignUpState extends State<SignUp> {
                     return null;
                   },
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
@@ -314,10 +278,10 @@ class _SignUpState extends State<SignUp> {
                   style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.black,
                     backgroundColor: Colors.white,
-                    padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                    padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
               ],
             ),
           ),
@@ -325,8 +289,4 @@ class _SignUpState extends State<SignUp> {
       ),
     );
   }
-}
-
-extension on PostgrestFilterBuilder<PostgrestList> {
-  execute() {}
 }

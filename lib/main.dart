@@ -7,9 +7,7 @@ import 'package:pt_events_app/pages/forgot_password.dart';
 import 'package:pt_events_app/pages/homepage.dart';
 import 'package:pt_events_app/pages/profile_page.dart';
 import 'package:pt_events_app/pages/sign_up.dart';
-import 'package:pt_events_app/pages/test.dart';
 import 'package:pt_events_app/routes/routes.dart';
-// import 'package:pt_events_app/pages/homepage.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
@@ -49,13 +47,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      // initialRoute: appRoutes.authGate(),
-
-      // home: const SignUp(),
       home: const AuthGate(),
-      // home: Homepage(), //Tempory to  test things out
-      // home: ProfilePage(), //Tempory to  test things out
-      // home: EventPage(), //Temporarily while working on the  events page
       routes: {
         AppRoutes.authGate: (context) => const AuthGate(),
         AppRoutes.login: (context) => const Login(),

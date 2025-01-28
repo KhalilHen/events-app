@@ -80,11 +80,7 @@ class _EventState extends State<EventPage> {
             } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
               return Center(child: Text('No events available.'));
             }
-            // else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            //   return Center(child: Text('No events available.'));
-            // }
-
-            // final events = snapshot.data!;
+      
             final events = snapshot.data ?? []; // Safe handling if data is null
 
             return ListView.builder(
@@ -92,17 +88,13 @@ class _EventState extends State<EventPage> {
               itemCount: events.length,
               itemBuilder: (context, index) {
                 final event = events[index];
-                // final  count = eventControllers.retrieveEvents().length;
                 return Padding(
                   padding: EdgeInsets.only(bottom: 16),
                   child: GestureDetector(
                     onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => ExpandedCardView(event: event))),
-                    // onTap: () =>  Navigator.pushNamed(context, '/detailedEvent', arguments: event),
-                    //  Navigator.pushNamed(context, AppRoutes.event, arguments: event),
+             
                     child: Hero(
-                      // tag: event.id,
                       tag: event,
-                      // tag: 'test',
 
                       child: Card(
                         shadowColor: Colors.black26,
@@ -145,7 +137,6 @@ class _EventState extends State<EventPage> {
                                     const SizedBox(
                                       height: 8,
                                     ),
-                                    // infoRow(Icons.access_time, event.time),
                                     infoRow(Icons.access_time, event.time.substring(0, 5)),
 
                                     const SizedBox(

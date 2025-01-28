@@ -128,33 +128,33 @@ class _HomepageState extends State<Homepage> {
                                       const SizedBox(height: 12),
                                       Row(
                                         children: [
-                                          Icon(
+                                 const         Icon(
                                             Icons.calendar_today,
                                             size: 16,
                                             color: Color(0xFF007BFF),
                                           ),
-                                          SizedBox(width: 8),
+                      const                    SizedBox(width: 8),
                                           Expanded(
                                             child: Text(
                                               '${DateFormat('yyyy-MM-dd').format(event.startDate)} - ${DateFormat('MM-dd-yyyy').format(event.endDate)}',
-                                              style: TextStyle(fontSize: 14),
+                                              style: const TextStyle(fontSize: 14),
                                             ),
                                           ),
                                         ],
                                       ),
-                                      SizedBox(height: 8),
+                                    const  SizedBox(height: 8),
                                       Row(
                                         children: [
-                                          Icon(
+                                 const          Icon(
                                             Icons.location_on,
                                             size: 16,
                                             color: Color(0xFF007BFF),
                                           ),
-                                          SizedBox(width: 8),
+                                    const      SizedBox(width: 8),
                                           Expanded(
                                             child: Text(
                                               event.location ?? 'No location',
-                                              style: TextStyle(fontSize: 14),
+                                              style:  const TextStyle(fontSize: 14),
                                             ),
                                           ),
                                         ],
@@ -228,7 +228,7 @@ class _HomepageState extends State<Homepage> {
                       currentIndex = 0;
                     });
                   },
-                  icon: Icon(Icons.home),
+                  icon:  const Icon(Icons.home),
                 ),
                 label: 'Home'),
             BottomNavigationBarItem(
@@ -238,7 +238,7 @@ class _HomepageState extends State<Homepage> {
                       currentIndex = 1;
                     });
                   },
-                  icon: Icon(Icons.event),
+                  icon: const Icon(Icons.event),
                 ),
                 label: 'Events'),
             BottomNavigationBarItem(
@@ -248,7 +248,7 @@ class _HomepageState extends State<Homepage> {
                     currentIndex = 2;
                   });
                 },
-                icon: Icon(Icons.person_outline),
+                icon: const Icon(Icons.person_outline),
               ),
               label: "Profile",
             )
