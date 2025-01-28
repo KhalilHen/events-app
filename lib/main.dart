@@ -52,9 +52,9 @@ class MyApp extends StatelessWidget {
       // initialRoute: appRoutes.authGate(),
 
       // home: const SignUp(),
-      // home: const AuthGate(),
+      home: const AuthGate(),
       // home: Homepage(), //Tempory to  test things out
-      home: ProfilePage(), //Tempory to  test things out
+      // home: ProfilePage(), //Tempory to  test things out
       // home: EventPage(), //Temporarily while working on the  events page
       routes: {
         AppRoutes.authGate: (context) => const AuthGate(),

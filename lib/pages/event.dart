@@ -145,7 +145,9 @@ class _EventState extends State<EventPage> {
                                     const SizedBox(
                                       height: 8,
                                     ),
-                                    infoRow(Icons.access_time, event.time),
+                                    // infoRow(Icons.access_time, event.time),
+                                    infoRow(Icons.access_time, event.time.substring(0, 5)),
+
                                     const SizedBox(
                                       height: 8,
                                     ),
