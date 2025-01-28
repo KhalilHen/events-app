@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:pt_events_app/auth/auth_service.dart';
 import 'package:pt_events_app/controllers/event_controllers.dart';
+import 'package:pt_events_app/pages/card_view.dart';
 import '../models/event_model.dart';
 
 class Homepage extends StatefulWidget {
@@ -87,106 +88,112 @@ class _HomepageState extends State<Homepage> {
                         return Container(
                           width: 300, // Fixed width for each card
                           padding: const EdgeInsets.only(right: 16),
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            elevation: 7,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                ClipRRect(
-                                  borderRadius: const BorderRadius.vertical(
-                                    top: Radius.circular(15),
-                                  ),
-                                  child: event.image != null
-                                      ? Image.network(event.image!)
-                                      : Container(
-                                          height: 200,
-                                          width: double.infinity,
-                                          color: const Color(0xFF007BFF).withOpacity(0.1),
-                                          child: const Icon(
-                                            Icons.event,
-                                            size: 50,
-                                            color: Color(0xFF007BFF),
-                                          ),
-                                        ),
+                          child: GestureDetector(
+                            onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => ExpandedCardView(event: event))),
+                            child: Hero(
+                              tag: event,
+                              child: Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.all(16),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        event.title,
-                                        style: const TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        overflow: TextOverflow.ellipsis,
+                                elevation: 7,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: const BorderRadius.vertical(
+                                        top: Radius.circular(15),
                                       ),
-                                      const SizedBox(height: 12),
-                                      Row(
-                                        children: [
-                                 const         Icon(
-                                            Icons.calendar_today,
-                                            size: 16,
-                                            color: Color(0xFF007BFF),
-                                          ),
-                      const                    SizedBox(width: 8),
-                                          Expanded(
-                                            child: Text(
-                                              '${DateFormat('yyyy-MM-dd').format(event.startDate)} - ${DateFormat('MM-dd-yyyy').format(event.endDate)}',
-                                              style: const TextStyle(fontSize: 14),
+                                      child: event.image != null
+                                          ? Image.network(event.image!)
+                                          : Container(
+                                              height: 200,
+                                              width: double.infinity,
+                                              color: const Color(0xFF007BFF).withOpacity(0.1),
+                                              child: const Icon(
+                                                Icons.event,
+                                                size: 50,
+                                                color: Color(0xFF007BFF),
+                                              ),
                                             ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(16),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            event.title,
+                                            style: const TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          const SizedBox(height: 12),
+                                          Row(
+                                            children: [
+                                              const Icon(
+                                                Icons.calendar_today,
+                                                size: 16,
+                                                color: Color(0xFF007BFF),
+                                              ),
+                                              const SizedBox(width: 8),
+                                              Expanded(
+                                                child: Text(
+                                                  '${DateFormat('yyyy-MM-dd').format(event.startDate)} - ${DateFormat('MM-dd-yyyy').format(event.endDate)}',
+                                                  style: const TextStyle(fontSize: 14),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          const SizedBox(height: 8),
+                                          Row(
+                                            children: [
+                                              const Icon(
+                                                Icons.location_on,
+                                                size: 16,
+                                                color: Color(0xFF007BFF),
+                                              ),
+                                              const SizedBox(width: 8),
+                                              Expanded(
+                                                child: Text(
+                                                  event.location ?? 'No location',
+                                                  style: const TextStyle(fontSize: 14),
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ],
                                       ),
-                                    const  SizedBox(height: 8),
-                                      Row(
-                                        children: [
-                                 const          Icon(
-                                            Icons.location_on,
-                                            size: 16,
-                                            color: Color(0xFF007BFF),
+                                    ),
+                                    Spacer(),
+                                    Padding(
+                                      padding: EdgeInsets.all(16),
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          eventController.leaveEvent(event.id);
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: const Color(0xFF007BFF),
+                                          foregroundColor: Colors.white,
+                                          minimumSize: Size(270, 48),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(8),
                                           ),
-                                    const      SizedBox(width: 8),
-                                          Expanded(
-                                            child: Text(
-                                              event.location ?? 'No location',
-                                              style:  const TextStyle(fontSize: 14),
-                                            ),
+                                        ),
+                                        child: const Text(
+                                          'Leave the event ',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
                                           ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Spacer(),
-                                Padding(
-                                  padding: EdgeInsets.all(16),
-                                  child: ElevatedButton(
-                                    onPressed: () {
-                                      eventController.leaveEvent(event.id);
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: const Color(0xFF007BFF),
-                                      foregroundColor: Colors.white,
-                                      minimumSize: Size(270, 48),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(8),
+                                        ),
                                       ),
                                     ),
-                                    child: const Text(
-                                      'Leave the event ',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
+                                  ],
                                 ),
-                              ],
+                              ),
                             ),
                           ),
                         );
@@ -228,7 +235,7 @@ class _HomepageState extends State<Homepage> {
                       currentIndex = 0;
                     });
                   },
-                  icon:  const Icon(Icons.home),
+                  icon: const Icon(Icons.home),
                 ),
                 label: 'Home'),
             BottomNavigationBarItem(
